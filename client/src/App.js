@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router,Route, Link, Switch } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import './App.css';
 import PropTypes from 'prop-types';
@@ -11,21 +11,23 @@ class App extends Component {
     render() {
         return (
             <div className="Wrap">
-            <div>wassa2</div>
             <Router>
                 <div className="App">
                     <Switch>
                         <Route exact path="/" render={() => (
                             <div className="Main">
+                                <p className="HeadingOne">
+                                    Delve&nbsp;&nbsp;In&nbsp;&nbsp;A&nbsp;&nbsp;World&nbsp;&nbsp;Of&nbsp;&nbsp;Art
+                                </p>
                                 <Link to="/Components/Pages/Register">
                                     <Button variant={"primary"} className={"ButRegis"} >
                                         Register
-                            </Button>
+                                    </Button>
                                 </Link>
                                 <Link to="/Components/Pages/Login">
-                                    <Button variant={"secondary"} className={"ButLogin"} >
+                                    <Button variant={"primary"} className={"ButLogin"} >
                                         Login
-                            </Button>
+                                    </Button>
                                 </Link>
                             </div>
                         )} />

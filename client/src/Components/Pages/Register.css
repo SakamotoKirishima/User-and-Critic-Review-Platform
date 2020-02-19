@@ -1,0 +1,79 @@
+.RegPage{
+    height: 70vh;
+    width:70vw;
+    display:flex;
+    flex-flow: row nowrap;
+    padding: 5px;    
+}
+.Left{
+    background: url(../Images/BackReg.png) ;
+    background-size: 100% 100%;
+    margin: 30px;
+    padding:3px;
+    color: cadetblue;
+    flex:60 0 0;
+}
+.Right{
+    margin: 30px;
+    background: #333;
+    color: cadetblue;
+    flex:40 0 0;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    background: black;
+    align-items: stretch;
+    justify-content: center;
+}
+.RegUser{
+    display: inline-flex;
+    margin:5%;
+    flex: 1 auto;
+    background: blue;
+    text-align: center;
+    justify-content: center;
+    
+}
+.Forms{
+    margin:auto;
+    height: 100%;
+    flex: 1 auto;
+    padding:2% ;
+    display: flex;
+    flex-direction: column;
+    background: gray;
+    color: indigo;
+}
+.row7{
+    margin: auto;
+    width:300px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.SignIn{   
+    width: auto;
+    height:auto;
+}
+/* .RegUser{
+    display:flex;
+    margin:5%;
+    flex-direction: column;
+    background: blue;
+    justify-content: center;
+    
+}
+.Forms{
+    margin:auto;
+    flex: 1 auto;
+    padding:2% ;
+    display: flex;
+    flex-direction: column;
+    background: green;
+}
+.row {
+    width: 100%;
+    height: 100%;
+    background: red;
+} */

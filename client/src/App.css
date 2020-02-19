@@ -1,18 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script:cursive');
+
 .App{
-    background: #333;
+    background: url(./Components/Images/BackMain.jpg) ;
+    background-size: 100% 100%;
     height: 100vh;
     width:100%;
     display:inline-flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     align-items: center;
     padding: 5px;
     justify-content: center;
 }
+.Main{
+    background: rgba(255, 255, 255, 0.3);
+    width:45vw;
+    height: 45vh;
+    display:inline-flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+}
 .ButRegis{
-    margin: 10px;
-    display: flex;
+    opacity: 1;
+    margin: 15px;
+    width:150px;
+    flex-grow: 1 ;
 }
 .ButLogin{
-    margin: 10px;
-    display: flex;
+    margin: 15px;
+    width:150px;
+    flex-grow: 1;
+}
+
+.HeadingOne{
+    width:45vw;
+    color: blue;
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    font-size: 60px;
+    font-weight: bold;
 }
