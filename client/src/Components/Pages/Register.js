@@ -20,19 +20,21 @@ class Register extends Component {
     }
     handleSubmit=(e)=>{
         e.preventDefault();
-        const data={email:this.state.email,
+        const data={
+        email:this.state.email,
         name:this.state.name,
         age:this.state.age,
         username:this.state.username,
         password:this.state.password
         }
-        console.log(e);
+        console.log(this.state.name);
     }
     handleChange = (e) => {
+        console.log(e.target.id,"+cursor is pero+",e.target.value);
         this.setState({
-          [e.target.name]: e.target.value
+          [e.target.id]: e.target.value
         })
-      }
+    }
     render() {
         return (
             <div className="RegPage">
@@ -42,32 +44,33 @@ class Register extends Component {
                 <div className="Right">
                     <div className="RegUser">
                         <Form className="Forms" onSubmit={this.handleSubmit}>
-                            <fieldset className="row row1">
-                                <Form.Group as={Row}>
-                                    <Form.Label as="TypeOfUsr" column sm={4}>
-                                        User Type
-                                    </Form.Label>
-                                    <Col sm={8}>
-                                        <Form.Check
-                                            custom
-                                            inline
-                                            label="User"
-                                            name="UserType"
-                                            type="radio"
-                                            defaultChecked
-                                            id={`TypeUser`}
-                                        />
-                                        <Form.Check
-                                            custom
-                                            inline
-                                            label="Artist"
-                                            name="UserType"
-                                            type="radio"
-                                            id={`TypeArtist`}
-                                        />
-                                    </Col>
-                                </Form.Group>
-                            </fieldset>
+                            {/* <fieldset className="row row1"> */}
+                            <Form.Group as={Row} onChange={this.handleChange}>
+                                <Form.Label as="TypeOfUsr" column sm={4}>
+                                    User Type
+                                </Form.Label>
+                                <Col sm={8}>
+                                    <Form.Check
+                                        custom
+                                        inline
+                                        label="User"
+                                        name="UserType"
+                                        value="user"
+                                        type="radio"
+                                        id="But1"
+                                    />
+                                    <Form.Check
+                                        custom
+                                        inline
+                                        label="Artist"
+                                        name="UserType"
+                                        value="artist"
+                                        type="radio"
+                                        id="But2"
+                                    />
+                                </Col>
+                            </Form.Group>
+                            {/* </fieldset> */}
                             <Form.Group as={Row} controlId="formHorEmail" className="row row2">
                                 <Form.Label column sm={2}>
                                     Email
