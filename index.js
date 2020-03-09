@@ -28,7 +28,9 @@ const app = express();
 app.use(bodyParser.json());
 
 //Import Routes
-require('./routes/artworkRoutes.js')(app);
+// require('./routes/artworkRoutes.js')(app);
+let artworkRoute = require('./routes/artworkRoutes.js')
+app.use(artworkRoute)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
