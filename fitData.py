@@ -1,0 +1,18 @@
+import pandas
+
+df = pandas.read_csv('Movies Dataset/raw/movies_metadata.csv')
+print(df.columns)
+df1 = pandas.read_csv('Movies Dataset/raw/links.csv')
+print(df1.columns)
+df1['imdbId'] = df1['imdbId'].astype('int64')
+df['imdb_id'] = df['imdb_id'].astype('str')
+# print(df['imdb_id'].dtype)
+# exit()
+df['imdb_id'] = df['imdb_id'].map(lambda x: x.lstrip('tt'))
+df['imdb_id'] = df['imdb_id'].replace('nan', '0')
+df['imdb_id'] = df['imdb_id'].astype('int64')
+print(df.iloc[0]['imdb_id'], df1.iloc[0]['imdbId'])
+finalDf = pandas.merge(df, df1, left_on='imdb_id', right_on='imdbId')
+finalDf = finalDf.drop(columns=['imdbId'])
+print(finalDf.columns)
+finalDf.to_csv('Movies Dataset/raw/all_movie_data.csv', index=False)
