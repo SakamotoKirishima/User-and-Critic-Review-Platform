@@ -39,8 +39,8 @@ const Artwork = mongoose.model('artworks')
           return;
         } else {
           // req.flash('success','Artwork Added');
-          // res.send('Success');
-          res.redirect('/api/artwork');
+          res.send('Success');
+          // res.redirect('/api/artwork');
         }
       });
     // }
@@ -85,8 +85,8 @@ router.post('/api/artwork/edit/:id', function(req, res){
       return;
     } else {
       // req.flash('success', 'Artwork Updated');
-      // res.send('Success');
-      res.redirect('/api/artwork');
+      res.send('Success');
+      // res.redirect('/api/artwork');
     }
   });
 });
