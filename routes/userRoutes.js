@@ -12,7 +12,7 @@ let User = require('../models/users');
 // });
 
 // Register Proccess
-router.post('/register', function(req, res){
+router.post('api/register', function(req, res){
   const username = req.body.username;
   const email = req.body.email;
   const gender = req.body.gender;
@@ -66,7 +66,7 @@ router.post('/register', function(req, res){
 // });
 
 // Login Process
-router.post('/login', function(req, res, next){
+router.post('api/login', function(req, res, next){
   passport.authenticate('local', {
     successRedirect:'/',
     failureRedirect:'/users/login',
@@ -75,10 +75,10 @@ router.post('/login', function(req, res, next){
 });
 
 // logout
-router.get('/logout', function(req, res){
+router.get('api/logout', function(req, res){
   req.logout();
   req.flash('success', 'You are logged out');
-  // res.redirect('/users/login');
+  // res.redirect('api/login');
 });
 
 module.exports = router;
