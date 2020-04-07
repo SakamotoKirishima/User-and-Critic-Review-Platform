@@ -21,7 +21,8 @@ const artworkSchema = mongoose.Schema({
   },
   dtu:{
     type: String,
-    required: true
+    required: true,
+    default: Date.now
   }
 });
 
