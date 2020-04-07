@@ -68,8 +68,8 @@ router.post('api/register', function(req, res){
 // Login Process
 router.post('api/login', function(req, res, next){
   passport.authenticate('local', {
-    successRedirect:'/',
-    failureRedirect:'/users/login',
+    successRedirect:'/api/artwork',
+    failureRedirect:'/api/login',
     failureFlash: true
   })(req, res, next);
 });
