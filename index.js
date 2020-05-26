@@ -30,10 +30,6 @@ app.use(passport.session());
 
 require('./routes/authRoute')(app);
 
-app.get('/',(req,res)=>{
-    res.send('wadup');
-})
-
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static('client/build'))
     const path = require('path')
