@@ -28,6 +28,7 @@ passport.use(
     (accessToken, refreshToken, profile, done) =>{
     User.findOne({googleId:profile.id})
     .then((existingUser)=>{
+        //console.log(profile)
         if(existingUser){
             done(null,existingUser)
         }
@@ -35,7 +36,11 @@ passport.use(
             new User({
                 googleId:profile.id,
                 userName:profile.displayName,
-                picture:profile._json.picture
+                picture:profile._json.picture,
+                displayName:'',
+                dateOfJoining:Date.now(),
+                googleMail:profile.emails[0].value,
+                genderType:''
             }).save()
             .then((user)=>{
                 done(null,user)

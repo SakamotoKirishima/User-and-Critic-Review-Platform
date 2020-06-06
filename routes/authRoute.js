@@ -1,4 +1,6 @@
 const passport = require('passport');
+const mongoose= require('mongoose')
+const User = mongoose.model('users')
 
 module.exports = (app)=>{
 
@@ -11,7 +13,6 @@ module.exports = (app)=>{
     })
 
     app.get('/api/current_user',(req,res)=>{
-        console.log(req.user+"wdad")
         res.send(req.user);
     })
 

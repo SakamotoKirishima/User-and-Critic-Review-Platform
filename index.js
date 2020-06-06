@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require("body-parser");
 var cors = require('cors')
 const mongoose=require('mongoose')
 const passport = require('passport')
@@ -8,8 +9,12 @@ const PORT = process.env.PORT || 5000;
 const cookieSession = require('cookie-session')
 
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
 
 require('./models/Users')
+require('./models/Artwork')
+require('./models/Rating')
 //Import UserModel before passport
 require('./services/passport');
 
@@ -29,6 +34,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/authRoute')(app);
+require('./routes/artworkRoute')(app);
+require('./routes/userRoute')(app);
+require('./routes/ratingRoute')(app);
 
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static('client/build'))
