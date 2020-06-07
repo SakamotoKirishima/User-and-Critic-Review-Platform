@@ -5,7 +5,6 @@ module.exports = (app)=>{
 
 //add if(req.user) to all
 
-
     app.put('/api/update/:id/:newDispName',(req,res)=>{
         User.findOne({googleId:req.params.id})
         .then((existingUser)=>{
@@ -18,6 +17,25 @@ module.exports = (app)=>{
                     function(err, result){
                         res.send(
                             (err === null) ? req.params.newDispName: {msg: err}
+                        );
+                    }
+                    );
+            }
+        })
+    })
+    app.put('/api/updateGender/:id/:setgender',(req,res)=>{
+        //console.log('ehere')
+        User.findOne({googleId:req.params.id})
+        .then((existingUser)=>{
+            if(existingUser)
+            {
+                //console.log(existingUser)
+                existingUser.update(
+                    {genderType:req.params.setgender},
+                    req.body,
+                    function(err, result){
+                        res.send(
+                            (err === null) ? req.params.setgender: {msg: err}
                         );
                     }
                     );

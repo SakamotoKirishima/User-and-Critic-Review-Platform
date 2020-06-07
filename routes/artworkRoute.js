@@ -1,5 +1,6 @@
 const passport = require('passport')
 const mongoose = require('mongoose')
+const Rating = mongoose.model('ratings')
 const Artwork = mongoose.model('artworks')
 
 module.exports = (app)=>{
@@ -74,7 +75,7 @@ module.exports = (app)=>{
     app.post('/api/addartwork',(req,res)=>{
         //console.log(req.body.title)
         Artwork.find({title:req.body.title,postedBy:req.body.postedBy},function(err,artworks){
-            console.log(artworks.length)
+            //console.log(artworks.length)
             if(err){
                  return res.send(err)
             }
@@ -114,5 +115,27 @@ module.exports = (app)=>{
         //{
          //   res.send('')
         //}
+    });
+
+    app.delete('/api/deleteartwork/:title/:postedby',(req,res)=>{
+        const title = decodeURI(req.params.title);
+        const postedBy= decodeURI(req.params.postedby);
+        // console.log(title)
+        // res.send('OK')
+        Artwork.deleteOne({title:title,postedBy:postedBy},function(err,artwork){
+            if(err){
+                return res.send(err)
+            }
+            else{
+                Rating.remove({title:title,postedBy:postedBy},function(err,artwork){
+                    if(err){
+                        return res.send(err)
+                    }
+                    else{
+                        return res.send('Artwork Successfully Deleted')
+                    }
+                })
+            }
+        });
     });
 }

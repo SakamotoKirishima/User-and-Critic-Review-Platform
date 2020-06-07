@@ -30,8 +30,6 @@ const ratingSchema = Schema({
       }
 });
 
-ratingSchema.index({postedBy:1},{unique:true});
-ratingSchema.index({ratedBy:1},{unique:true});
-ratingSchema.index({title:1},{unique:true});
+ratingSchema.index({postedBy: 1, ratedBy:1,title :1},{unique:true});   
 
 mongoose.model("ratings",ratingSchema);
