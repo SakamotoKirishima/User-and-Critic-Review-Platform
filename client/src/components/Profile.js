@@ -52,6 +52,7 @@ const Profile = (props)=>{
                 <img className="circle" src={userdata.picture}></img>
                 <h2>{userdata.displayName}</h2>
                 <form onSubmit={(e)=>{e.preventDefault();props.updateUserDetails(curDisName);}}>
+                <img src='/userimages/Witcher.jpg' style={{width:'100px',height:'100px',backgroundColor:'red'}} alt="loaddddd"/>
                 <input placeholder="Placeholder" id="first_name" type="text" className="validate" value={curDisName} onChange={e => setDispName(e.target.value)}></input>
                 </form>
                 <h2>{userdata.googleMail}</h2>

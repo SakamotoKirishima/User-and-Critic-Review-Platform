@@ -14,6 +14,7 @@ const Header = (props)=>{
                     <React.Fragment>
                         <li><a href="/api/logout/">Logout</a></li>
                         <li><Link to="/profile">Porfile</Link></li>
+                        <li><Link to="/upload">Upload</Link></li>
                     </React.Fragment>
                 )
         }

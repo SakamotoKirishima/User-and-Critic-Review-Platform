@@ -17,7 +17,7 @@ require('./models/Artwork')
 require('./models/Rating')
 //Import UserModel before passport
 require('./services/passport');
-
+const path = require('path')
 //Connect to mongoose
 mongoose.connect(keys.mongoURI,()=>{
     console.log("Conneted to MongoDB database")
@@ -32,15 +32,17 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+// app.use('/userimages',express.static(path.join(__dirname, 'public')));
 
 require('./routes/authRoute')(app);
 require('./routes/artworkRoute')(app);
 require('./routes/userRoute')(app);
 require('./routes/ratingRoute')(app);
+require('./routes/imageUpload')(app);
 
 if(process.env.NODE_ENV === 'production'){
     app.use(express.static('client/build'))
-    const path = require('path')
+    
     app.get('*',(req,res)=>{
         res.sendFile(path.resolve(__dirname,'client','build','index.html'))
     })
