@@ -5,8 +5,8 @@ import numpy
 import pandas
 import ast
 
-csvFilePath = 'Movies Dataset/raw/all_movie_data.csv'
-jsonFilePath = 'Movies Dataset/processed/all_movie_data.json'
+csvFilePath = 'User Dataset/raw/UsersID.csv'
+jsonFilePath = 'User Dataset/processed/Users.json'
 jsonDictList = list()
 df = pandas.read_csv(csvFilePath)
 # df = df.drop(
