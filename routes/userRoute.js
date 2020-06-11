@@ -6,20 +6,27 @@ module.exports = (app)=>{
 //add if(req.user) to all
 
     app.put('/api/update/:id/:newDispName',(req,res)=>{
-        User.findOne({googleId:req.params.id})
-        .then((existingUser)=>{
-            if(existingUser)
-            {
-                //console.log(existingUser)
-                existingUser.update(
-                    {displayName:req.params.newDispName},
-                    req.body,
-                    function(err, result){
-                        res.send(
-                            (err === null) ? req.params.newDispName: {msg: err}
-                        );
+        User.findOne({displayName:req.params.newDispName})
+        .then((userchk)=>{
+            if(userchk)
+                return res.send('Name Not Available');
+            else{
+                User.findOne({googleId:req.params.id})
+                .then((existingUser)=>{
+                    if(existingUser)
+                    {
+                        //console.log(existingUser)
+                        existingUser.update(
+                            {displayName:req.params.newDispName},
+                            req.body,
+                            function(err, result){
+                                res.send(
+                                    (err === null) ? req.params.newDispName: {msg: err}
+                                );
+                            }
+                            );
                     }
-                    );
+                })
             }
         })
     })
