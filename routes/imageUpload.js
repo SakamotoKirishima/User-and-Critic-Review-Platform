@@ -2,7 +2,7 @@ let multer = require('multer');
 const imageToBase64 = require('image-to-base64');
 const fetch = require('node-fetch')
 var FormData = require('form-data');
-var fs = require('fs');
+// var fs = require('fs');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -26,7 +26,7 @@ module.exports=(app)=>{
         .then((response) => {
                 // data1=response; //cGF0aC90by9maWxlLmpwZw==
                 // data1= data1.concat(data2);
-                console.log(response);
+                // console.log(response);
                 form.append('image',response)
                 console.log(form);
                 
@@ -35,9 +35,10 @@ module.exports=(app)=>{
         .catch(
             (error) => {
                 console.log(error); //Exepection error....
+                return res.send('Err')
             }
         )
-        console.log('ddwaadwa');
+        // console.log('ddwaadwa');
         const response1 = await fetch('https://api.imgur.com/3/image.json', {
             method: 'POST',
             headers: {
@@ -47,10 +48,8 @@ module.exports=(app)=>{
             body: form
             })
             const data = await response1.json()
-            console.log(data)
-            res.send(data.success)
-        
-        // res.send('OK');
-        
+            if(data.success)
+                return res.send(data.data.link)
+            res.send('Err')
     })
 }
