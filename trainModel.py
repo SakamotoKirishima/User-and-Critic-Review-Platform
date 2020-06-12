@@ -6,12 +6,12 @@ from sklearn.preprocessing import LabelEncoder
 import pymongo
 import argparse
 import tensorflow as tf
-from keras.models import Model
-from keras.layers import Input, Reshape, Dot
-from keras.layers.embeddings import Embedding
-from keras.optimizers import Adam
-from keras.regularizers import l2
-from keras.layers import Add, Activation, Lambda
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, Reshape, Dot
+from tensorflow.keras.layers import Embedding
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.regularizers import l2
+from tensorflow.keras.layers import Add, Activation, Lambda
 
 
 class EmbeddingLayer:
@@ -100,7 +100,7 @@ movie_count = rating.groupby(args.title)[args.rating].count()
 top_movies = movie_count.sort_values(ascending=False)[:15]
 top_r = rating.join(top_users, rsuffix='_r', how='inner', on=args.user_id)
 top_r = top_r.join(top_movies, rsuffix='_r', how='inner', on=args.title)
-print(pd.crosstab(top_r.userId, top_r.movieId, top_r.rating, aggfunc=np.sum))
+print(pd.crosstab(top_r[args.user_id], top_r[args.title], top_r[args.rating], aggfunc=np.sum))
 
 user_enc = LabelEncoder()
 rating['user'] = user_enc.fit_transform(rating[args.rating].values)
@@ -121,6 +121,6 @@ X_train_array = [X_train[:, 0], X_train[:, 1]]
 X_test_array = [X_test[:, 0], X_test[:, 1]]
 model = RecommenderV2(n_users, n_movies, n_factors, min_rating, max_rating)
 model.summary()
-history = model.fit(x=X_train_array, y=y_train, batch_size=64, epochs=5, verbose=1,
+history = model.fit(x=X_train_array, y=y_train, batch_size=128, epochs=100, verbose=1,
                     validation_data=(X_test_array, y_test))
 tf.saved_model.save(model, os.getcwd() + os.sep + args.path_to_save_model)

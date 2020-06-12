@@ -1,18 +1,10 @@
 import pandas
-import json
+import random
 
-import pymongo
-
-client = pymongo.MongoClient(
-    'mongodb+srv://mathangi_s:Meenakshi12@cluster0-mvtbq.mongodb.net/test?retryWrites=true&w=majority')
-print(client.list_database_names())
-db = client.critle
-print(db.collection_names())
-movieData = list(db.movies.find({}))
-movieDataValues = list()
-
-for row in movieData:
-    rowValues = row.values()
-    movieDataValues.append(rowValues)
-movieDataDf = pandas.DataFrame(movieDataValues, columns=movieData[0].keys())
-print(movieDataDf)
+df = pandas.read_csv('Drawings Dataset/raw/MoMACollection/ratings.csv')
+# print(df.shape)
+# exit()
+rows_to_delete = random.sample(range(0, len(df.index)), 24000100)
+df = df.drop(rows_to_delete)
+print(df.shape)
+df.to_csv('Drawings Dataset/raw/MoMACollection/ratings.csv', index=False)

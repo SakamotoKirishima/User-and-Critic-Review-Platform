@@ -5,22 +5,19 @@ import numpy
 import pandas
 import ast
 
-csvFilePath = 'User Dataset/raw/UsersID.csv'
-jsonFilePath = 'User Dataset/processed/Users.json'
+csvFilePath = 'Drawings Dataset/raw/MoMACollection/ratings.csv'
+jsonFilePath = 'Drawings Dataset/processed/ratings.json'
 jsonDictList = list()
 df = pandas.read_csv(csvFilePath)
-# df = df.drop(
-#     ['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1', 'Unnamed: 0.1.1.1', 'Unnamed: 0.1.1.1.1', 'Unnamed: 0.1.1.1.1.1',
-#      'Unnamed: 0.1.1.1.1.1.1', 'Unnamed: 0.1.1.1.1.1.1.1', 'Unnamed: 0.1.1.1.1.1.1.1.1', 'Unnamed: 0.1.1.1.1.1.1.1.1.1',
-#      'Unnamed: 0.1.1.1.1.1.1.1.1.1.1', 'Unnamed: 0.1.1.1.1.1.1.1.1.1.1.1', 'Unnamed: 0.1.1.1.1.1.1.1.1.1.1.1.1',
-#      'Unnamed: 0.1.1.1.1.1.1.1.1.1.1.1.1.1'], axis=1)
-# df = df.drop('Unnamed: 0', axis=1)
+# df = df.rename(columns={'Duration (sec.)': 'Duration(sec)'})
 jsonKeys = df.columns.tolist()
 print(jsonKeys)
 # exit()
-# print(df.head())
-affectedColumns = set()
+# print(df['Artist'])
+# exit()
+# affectedColumns = set()
 for index, row in df.iterrows():
+    print(index)
     rowList = row.tolist()
     jsonDict = dict()
     i = 0
@@ -29,11 +26,10 @@ for index, row in df.iterrows():
             try:
                 jsonDict[jsonKeys[i]] = ast.literal_eval(item)
             except Exception as e:
-                if jsonKeys[i] in {'artist_name', 'title', 'release'}:
-                    if item == numpy.nan:
-                        jsonDict[jsonKeys[i]] = "nan"
-                    else:
-                        jsonDict[jsonKeys[i]] = item
+                if item == numpy.nan:
+                    jsonDict[jsonKeys[i]] = "nan"
+                else:
+                    jsonDict[jsonKeys[i]] = item
                 # affectedColumns.add(jsonKeys[i])
             # print(eval(item))
             # jsonDict[jsonKeys[i]] = ast.literal_eval(item)
@@ -50,6 +46,7 @@ for index, row in df.iterrows():
     # exit()
 print(len(jsonDictList))
 print(len(df.index))
+# exit()
 fp = open(jsonFilePath, 'w')
 fp.writelines(jsonDictList)
 fp.close()
