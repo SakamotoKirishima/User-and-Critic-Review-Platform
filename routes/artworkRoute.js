@@ -73,7 +73,7 @@ module.exports = (app)=>{
     })
 
     app.post('/api/addartwork',(req,res)=>{
-        //console.log(req.body.title)
+        console.log(req.body)
         Artwork.find({title:req.body.title,postedBy:req.body.postedBy},function(err,artworks){
             //console.log(artworks.length)
             if(err){

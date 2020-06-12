@@ -50,8 +50,25 @@ class Upload extends Component{
         })
         .then(res=>{
             console.log(res);
-            const embedded_link=res.data;
-
+            const embedded_link='https://i.imgur.com/k9xY1hE.jpg';
+            console.log(embedded_link);
+            // const newArtwork = new FormData();
+            // fd.append('title',this.state.title);
+            // fd.append('tags',this.state.tags);
+            // fd.append('description',this.state.description);
+            // fd.append('embedded_link',embedded_link);
+            // fd.append('postedBy',this.props.user.displayName);
+            const newArtwork = {
+                'title':this.state.title,
+                'tags':this.state.tags,
+                'description':this.state.description,
+                'embedded_link':embedded_link,
+                'postedBy':this.props.user.displayName
+            }
+            Axios.post('/api/addartwork',newArtwork,{})
+            .then(res=>{
+                console.log(res);
+            })
         });
     }
     removeTag=(i)=>{
@@ -82,13 +99,22 @@ class Upload extends Component{
             // console.log(this.state.title)
         }
     }
+    descKeyDown=(e)=>{
+        const val=e.target.value;
+        if(e.key==='Enter' && val){
+            // console.log(val);
+            this.setState({description:val});
+             console.log(this.state)
+        }
+    }
     render(){
         return (
             <div className="Container">  
                 <p className="Parag">Hallo {console.log(this.props.user)}</p>
                 <input type="file" className="input_image" onChange={this.fileSelectedHandler} />
                 <button onClick={this.fileUploadHandler} className="input_img__button">Submit</button>
-                <input type='text' onKeyDown={this.titleKeyDown}></input>
+                <input type='text' onKeyDown={this.titleKeyDown} placeholder="Title Here"></input>
+                <input type='textarea' onKeyDown={this.descKeyDown} placeholder="Description here"></input>
                 <div className="input-tag">
                     <ul className="input-tag__tags">
                         {this.state.tags.map((tag,i)=>(
@@ -98,7 +124,7 @@ class Upload extends Component{
                             </li>
                         ))}
                         <li className='input-tag__tags__input'> 
-                            <input type='text'  onKeyDown={this.inputKeyDown} ref={(c)=>{this.tagInput=c;}}/>
+                            <input type='text'  onKeyDown={this.inputKeyDown} ref={(c)=>{this.tagInput=c;}} placeholder="Add relevant tags"/>
                         </li>
                     </ul>
                 </div>
