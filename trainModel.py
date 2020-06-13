@@ -18,6 +18,7 @@ class EmbeddingLayer:
     """
     Class to define Embedding Layer
     """
+
     def __init__(self, n_items, n_factors):
         """
         __init__() function
@@ -140,18 +141,20 @@ def train_and_save(n_factors, X_train, X_test, y_train, y_test, n_users, n_art, 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('server')
+    parser.add_argument('user_name')
+    parser.add_argument('password')
     parser.add_argument('collection')
-    parser.add_argument('ratings_collection')
+    parser.add_argument('rating_collection')
     parser.add_argument('id')
     parser.add_argument('rating')
     parser.add_argument('user_id')
     parser.add_argument('path_to_save_model')
     args = parser.parse_args()
-    X_train, X_test, y_train, y_test, min_rating, max_rating, movies, users = get_train_test_sets(args.server,
-                                                                                                  args.collection,
-                                                                                                  args.rating_collection,
-                                                                                                  args.user_id,
-                                                                                                  args.rating, args.id)
+    server_url = "mongodb+srv://" + args.user_name + ":" + args.password + "@cluster0-mvtbq.mongodb.net/<dbname>?retryWrites=true&w=majority"
+    X_train, X_test, y_train, y_test, min_rating, max_rating, movies, users = get_train_test_sets(server_url,
+                                                                              args.collection,
+                                                                              args.rating_collection,
+                                                                              args.user_id,
+                                                                              args.rating, args.id)
     n = 50
     train_and_save(n, X_train, X_test, y_train, y_test, users, movies, min_rating, max_rating, args.path_to_save_model)

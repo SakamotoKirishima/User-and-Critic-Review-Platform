@@ -50,6 +50,6 @@ if __name__ == '__main__':
     parser.add_argument('csv_file_path')
     parser.add_argument('json_file_path')
     args = parser.parse_args()
-    csvFilePath = args.csv_file_fath
+    csvFilePath = args.csv_file_path
     jsonFilePath = args.json_file_path
     convert(csvFilePath, jsonFilePath)
