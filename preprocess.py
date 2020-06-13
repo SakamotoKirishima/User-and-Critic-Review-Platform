@@ -14,88 +14,88 @@ from sklearn.preprocessing import MinMaxScaler
 import pymongo
 import argparse
 
+def process_data():
+    client = pymongo.MongoClient()
+    print(client.list_database_names())
+    db = client.critle
+    print(db.collection_names())
+    musicData = list(db[args.collection].find({}))
+    musicDataValues = list()
+
+    for row in musicData:
+        rowValues = row.values()
+        musicDataValues.append(rowValues)
+    music = pd.DataFrame(musicDataValues, columns=musicData[0].keys())
+    music = music.drop(['_id'], axis=1)
+    print(music)
+    # print(args.rating_collection)
+    # exit()
+    ratingData = list(db[args.ratings_collection].find({}))
+    musicRatingDataValues = list()
+    for row in ratingData:
+        rowValues = row.values()
+        musicRatingDataValues.append(rowValues)
+    rating = pd.DataFrame(musicRatingDataValues, columns=ratingData[0].keys())
+    rating = rating.drop(['_id'], axis=1)
+    print(rating)
+    # exit()
+    # rating = pd.read_csv('ratings_small.csv')
+    # rating = pd.read_csv('BX-Book-Ratings.csv', sep=';', error_bad_lines=False, encoding="latin-1")
+    # user = pd.read_csv('BX-Users.csv', sep=';', error_bad_lines=False, encoding="latin-1")
+    # book = pd.read_csv('BX-Books.csv', sep=';', error_bad_lines=False, encoding="latin-1")
+    # movies= pd.read_csv('allData.csv')
+    # movies.columns
+    music_rating = pd.merge(rating, music, on=args.join_column)
+    # book_rating = pd.merge(rating, book, on='ISBN')
+    # cols = ['Year-Of-Publication', 'Publisher', 'Book-Author', 'Image-URL-S', 'Image-URL-M', 'Image-URL-L']
+    # book_rating.drop(cols, axis=1, inplace=True)
+    # print(rating.describe())
+    # print(user.describe())
+    # print(book.describe())
+    print(music_rating.head())
+    # exit()
+    rating_count = (
+        music_rating.groupby(by=[args.title])[args.rating].count().reset_index().rename(
+            columns={args.rating: 'rating_count_art'})[[args.title, 'rating_count_art']])
+
+    threshold = 25
+    rating_count = rating_count.query('rating_count_art >= @threshold')
+
+    user_rating = pd.merge(rating_count, music_rating, left_on=args.title, right_on=args.title, how='left')
+    print(user_rating)
+    user_count = (
+        user_rating.groupby(by=[args.user_id])[args.rating].count().reset_index().rename(
+            columns={args.rating: 'RatingCount_user'})[[args.user_id, 'RatingCount_user']])
+
+    threshold = 10
+    user_count = user_count.query('RatingCount_user >= @threshold')
+
+    combined = user_rating.merge(user_count, left_on=args.user_id, right_on=args.user_id, how='inner')
+    # print(combined)
+    # exit()
+    print('Number of unique artworks: ', combined[args.title].nunique())
+    print('Number of unique users: ', combined[args.user_id].nunique())
+    # exit()
+    scaler = MinMaxScaler()
+    combined[args.rating] = combined[args.rating].values.astype(float)
+    rating_scaled = pd.DataFrame(scaler.fit_transform(combined[args.rating].values.reshape(-1, 1)))
+    combined[args.rating] = rating_scaled
+
+    combined = combined.drop_duplicates([args.user_id, args.title])
+    user_music_matrix = combined.pivot(index=args.user_id, columns=args.title, values=args.rating)
+    user_music_matrix.fillna(0, inplace=True)
+    users = user_music_matrix.index.tolist()
+    books = user_music_matrix.columns.tolist()
+    user_music_matrix = user_music_matrix.values
 parser = argparse.ArgumentParser()
+parser.add_argument('server')
 parser.add_argument('collection')
-# parser.add_argument('id')
 parser.add_argument('ratings_collection')
 parser.add_argument('join_column')
 parser.add_argument('title')
 parser.add_argument('rating')
 parser.add_argument('user_id')
 args = parser.parse_args()
-client = pymongo.MongoClient(
-    'mongodb+srv://mathangi_s:Meenakshi12@cluster0-mvtbq.mongodb.net/test?retryWrites=true&w=majority')
-print(client.list_database_names())
-db = client.critle
-print(db.collection_names())
-musicData = list(db[args.collection].find({}))
-musicDataValues = list()
-
-for row in musicData:
-    rowValues = row.values()
-    musicDataValues.append(rowValues)
-music = pd.DataFrame(musicDataValues, columns=musicData[0].keys())
-music = music.drop(['_id'], axis=1)
-print(music)
-# print(args.rating_collection)
-# exit()
-ratingData = list(db[args.ratings_collection].find({}))
-musicRatingDataValues = list()
-for row in ratingData:
-    rowValues = row.values()
-    musicRatingDataValues.append(rowValues)
-rating = pd.DataFrame(musicRatingDataValues, columns=ratingData[0].keys())
-rating = rating.drop(['_id'], axis=1)
-print(rating)
-# exit()
-# rating = pd.read_csv('ratings_small.csv')
-# rating = pd.read_csv('BX-Book-Ratings.csv', sep=';', error_bad_lines=False, encoding="latin-1")
-# user = pd.read_csv('BX-Users.csv', sep=';', error_bad_lines=False, encoding="latin-1")
-# book = pd.read_csv('BX-Books.csv', sep=';', error_bad_lines=False, encoding="latin-1")
-# movies= pd.read_csv('allData.csv')
-# movies.columns
-music_rating = pd.merge(rating, music, on=args.join_column)
-# book_rating = pd.merge(rating, book, on='ISBN')
-# cols = ['Year-Of-Publication', 'Publisher', 'Book-Author', 'Image-URL-S', 'Image-URL-M', 'Image-URL-L']
-# book_rating.drop(cols, axis=1, inplace=True)
-# print(rating.describe())
-# print(user.describe())
-# print(book.describe())
-print(music_rating.head())
-# exit()
-rating_count = (
-    music_rating.groupby(by=[args.title])[args.rating].count().reset_index().rename(
-        columns={args.rating: 'rating_count_art'})[[args.title, 'rating_count_art']])
-
-threshold = 25
-rating_count = rating_count.query('rating_count_art >= @threshold')
-
-user_rating = pd.merge(rating_count, music_rating, left_on=args.title, right_on=args.title, how='left')
-print(user_rating)
-user_count = (
-    user_rating.groupby(by=[args.user_id])[args.rating].count().reset_index().rename(
-        columns={args.rating: 'RatingCount_user'})[[args.user_id, 'RatingCount_user']])
-
-threshold = 10
-user_count = user_count.query('RatingCount_user >= @threshold')
-
-combined = user_rating.merge(user_count, left_on=args.user_id, right_on=args.user_id, how='inner')
-# print(combined)
-# exit()
-print('Number of unique artworks: ', combined[args.title].nunique())
-print('Number of unique users: ', combined[args.user_id].nunique())
-# exit()
-scaler = MinMaxScaler()
-combined[args.rating] = combined[args.rating].values.astype(float)
-rating_scaled = pd.DataFrame(scaler.fit_transform(combined[args.rating].values.reshape(-1, 1)))
-combined[args.rating] = rating_scaled
-
-combined = combined.drop_duplicates([args.user_id, args.title])
-user_music_matrix = combined.pivot(index=args.user_id, columns=args.title, values=args.rating)
-user_music_matrix.fillna(0, inplace=True)
-users = user_music_matrix.index.tolist()
-books = user_music_matrix.columns.tolist()
-user_music_matrix = user_music_matrix.values
 
 import tensorflow.compat.v1 as tf
 
