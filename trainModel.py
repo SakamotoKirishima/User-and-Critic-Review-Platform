@@ -134,7 +134,7 @@ def train_and_save(n_factors, X_train, X_test, y_train, y_test, n_users, n_art, 
     X_test_array = [X_test[:, 0], X_test[:, 1]]
     model = RecommenderV2(n_users, n_art, n_factors, min_rating, max_rating)
     model.summary()
-    history = model.fit(x=X_train_array, y=y_train, batch_size=128, epochs=100, verbose=1,
+    history = model.fit(x=X_train_array, y=y_train, batch_size=128, epochs=10, verbose=1,
                         validation_data=(X_test_array, y_test))
     tf.saved_model.save(model, os.getcwd() + os.sep + file_path)
 
