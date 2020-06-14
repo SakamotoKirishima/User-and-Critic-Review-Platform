@@ -8,7 +8,7 @@ module.exports = (app)=>{
 //Add if(req.user) to all later
 
     app.get('/api/artworks',(req,res)=>{
-        console.log(req.user)
+        // console.log(req.user)
         //if(!req.user)
         //    res.send('ERROR : REQUEST NOT AUTHENTICATED');
         Artwork.find({},function(err,artworks){
@@ -21,8 +21,9 @@ module.exports = (app)=>{
         });
     });
 
-    app.get('/api/artwork/byuser',(req,res)=>{
-        Artwork.find({postedBy:req.body.postedBy},function(err,artworks){
+    app.get('/api/artwork/byuser/:postedBy',(req,res)=>{
+        // console.log(req.params)
+        Artwork.find({postedBy:req.params.postedBy},function(err,artworks){
             if(err){
                 return res.send(err)
            }
@@ -73,7 +74,7 @@ module.exports = (app)=>{
     })
 
     app.post('/api/addartwork',(req,res)=>{
-        console.log(req.body)
+        // console.log(req.body)
         Artwork.find({title:req.body.title,postedBy:req.body.postedBy},function(err,artworks){
             //console.log(artworks.length)
             if(err){
@@ -116,6 +117,19 @@ module.exports = (app)=>{
          //   res.send('')
         //}
     });
+
+    app.get('/api/artwork/artworkimg/:title/:postedBy',(req,res)=>{
+        const title = decodeURI(req.params.title);
+        const postedBy= decodeURI(req.params.postedBy);
+        Artwork.find({title:title,postedBy:postedBy},function(err,artwork){
+            if(err){
+                return res.send(err);
+            }
+            else{
+                return res.send(artwork[0].embedded_link)
+            }
+        })
+    })
 
     app.delete('/api/deleteartwork/:title/:postedby',(req,res)=>{
         const title = decodeURI(req.params.title);

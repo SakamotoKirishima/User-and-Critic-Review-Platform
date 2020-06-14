@@ -2,7 +2,7 @@ import React,{useEffect} from 'react';
 import './App.css';
 import Header from './components/Header';
 import Home from './components/Home';
-import Profile from './components/Profile';
+import Profile from './components/ProfilePage/Profile';
 import Upload from './components/Upload';
 import {BrowserRouter,Route} from 'react-router-dom';
 import {connect} from 'react-redux'

@@ -21,6 +21,17 @@ module.exports=(app)=>{
         })
     })
 
+    app.get('/api/rating/getrating/:ratedby',(req,res)=>{
+        const ratedBy = decodeURI(req.params.ratedby);
+        Rating.find({ratedBy:ratedBy},function(err,ratings){
+            console.log(err)
+            if(err)
+                return res.send(err);
+            else
+                return res.send(ratings)
+        })
+    })
+
     app.post('/api/rating/rateartwork',(req,res)=>{
         Rating.findOne({title:req.body.title,
             postedBy:req.body.postedBy,

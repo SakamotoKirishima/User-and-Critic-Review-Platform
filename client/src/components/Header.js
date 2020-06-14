@@ -22,7 +22,7 @@ const Header = (props)=>{
     return(
         <nav>
         <div className="nav-wrapper">
-            <Link to={props.user?'/profile':'/'} className="brand-logo">GOgle</Link>
+            <Link to={props.user?'/profile':'/'} className="brand-logo">Critle</Link>
             <ul id="nav-mobile" className="right ">
                 {renderContent()}
             </ul>
