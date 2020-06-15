@@ -1,0 +1,32 @@
+.profileSubTitleDiv {
+    border-bottom: 1px black solid;
+    width : 80%;
+    margin :50px auto;
+    text-align: center;
+
+}
+
+.pastUploadDiv {
+    width : 80%;
+    height: 20em;
+    margin:auto;
+    /* padding-left: 50px;
+    padding-right: 50px; */
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.profileSubTitle {
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight:400;
+    font-size: 1.7em;
+    line-height: 35px;
+    text-align: left;
+    padding-left: 1%;
+
+    color: #000000;
+
+}

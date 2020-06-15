@@ -33,8 +33,8 @@ module.exports = (app)=>{
         });
     });
 
-    app.get('/api/artwork/byname',(req,res)=>{
-        Artwork.find({title:{$regex:req.body.title,$options:'$i'}},function(err,artworks){
+    app.get('/api/artwork/byname/:name',(req,res)=>{
+        Artwork.find({title:{$regex:req.params.name,$options:'$i'}},function(err,artworks){
             if(err){
                 return res.send(err)
            }

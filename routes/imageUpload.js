@@ -39,19 +39,19 @@ module.exports=(app)=>{
             }
         )
         // console.log('ddwaadwa');
-        res.send('OK');
-        })
-    //     const response1 = await fetch('https://api.imgur.com/3/image.json', {
-    //         method: 'POST',
-    //         headers: {
-    //             Accept: 'application/json',
-    //             Authorization: `Client-ID 667ab1880f44dcb`
-    //         },
-    //         body: form
-    //         })
-    //         const data = await response1.json()
-    //         if(data.success)
-    //             return res.send(data.data.link)
-    //         res.send('Err')
-    // })
+        // res.send('OK');
+        // })
+        const response1 = await fetch('https://api.imgur.com/3/image.json', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Client-ID 667ab1880f44dcb`
+            },
+            body: form
+            })
+            const data = await response1.json()
+            if(data.success)
+                return res.send(data.data.link)
+            res.send('Err')
+    })
 }

@@ -5,6 +5,7 @@ import {handleSubmit} from '../../actions/updateUserDetails'
 
 import Upload from "./ProfileComponents/PastUpload/PastUpload"
 import Review from "./ProfileComponents/PastReview/PastReview"
+import {Link} from 'react-router-dom'
 
 import "./Profile.css"
 import Col from 'react-bootstrap/Col'
@@ -120,7 +121,9 @@ const Profile = (props)=>{
                                 <img id="profilePic" src={userdata.picture} />
                                 <h1 id="profileName">{userdata.displayName}</h1>
                                 <h4 id="profileMail">{userdata.googleMail}</h4>
-                                <button className="critleButtonNew">Upload Artwork</button>
+                                <Link to="/upload">
+                                    <button className="critleButtonNew">Upload Artwork</button>
+                                </Link>
                             </Col>
                         </Row>
                     </div>

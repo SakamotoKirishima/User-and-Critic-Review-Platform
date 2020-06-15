@@ -6,7 +6,8 @@ import Profile from './components/ProfilePage/Profile';
 import Upload from './components/Upload';
 import {BrowserRouter,Route} from 'react-router-dom';
 import {connect} from 'react-redux'
-import {fetchUserAction} from './actions/myaction'
+import {fetchUserAction} from './actions/myaction';
+import Explore from './components/ExplorePage/Explore'
 function App(props) {
     useEffect(()=>{
         props.fetch_user()
@@ -17,6 +18,7 @@ function App(props) {
       <Route exact path="/" component={Home} />
       <Route path="/profile" component={Profile} />
       <Route path="/upload" component={Upload} />
+      <Route path="/explore" component={Explore}/>
     </BrowserRouter>
   );
 }
