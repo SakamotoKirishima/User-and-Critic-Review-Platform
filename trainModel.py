@@ -40,7 +40,7 @@ class EmbeddingLayer:
         return x
 
 
-def RecommenderV2(n_users, n_art, n_factors, min_rating, max_rating):
+def recommender_v_2(n_users, n_art, n_factors, min_rating, max_rating):
     """
     Defines the recommender system
     :param n_users: users in the system
@@ -80,18 +80,18 @@ def get_train_test_sets(server, req_collection, req_rating_collection, user_id, 
     """
     client = pymongo.MongoClient(server)
     db = client.critle
-    artData = list(db[req_collection].find({}))
-    artDataValues = list()
-    for row in artData:
-        rowValues = row.values()
-        artDataValues.append(rowValues)
-    art = pd.DataFrame(artDataValues, columns=artData[0].keys())
-    ratingData = list(db[req_rating_collection].find({}))
-    artRatingDataValues = list()
-    for row in ratingData:
-        rowValues = row.values()
-        artRatingDataValues.append(rowValues)
-    rating = pd.DataFrame(artRatingDataValues, columns=ratingData[0].keys())
+    art_data = list(db[req_collection].find({}))
+    art_data_values = list()
+    for row in art_data:
+        row_values = row.values()
+        art_data_values.append(row_values)
+    art = pd.DataFrame(art_data_values, columns=art_data[0].keys())
+    rating_data = list(db[req_rating_collection].find({}))
+    art_rating_data_values = list()
+    for row in rating_data:
+        row_values = row.values()
+        art_rating_data_values.append(row_values)
+    rating = pd.DataFrame(art_rating_data_values, columns=rating_data[0].keys())
     rating = rating.drop(['_id'], axis=1)
     rating_count = rating.groupby(user_id)[ratings].count()
     top_users = rating_count.sort_values(ascending=False)[:15]
@@ -111,16 +111,16 @@ def get_train_test_sets(server, req_collection, req_rating_collection, user_id, 
     max_rating = max(rating['rating'])
     X = rating[['user', 'art']].values
     y = rating['rating'].values
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
-    return X_train, X_test, y_train, y_test, min_rating, max_rating, n_art, n_users
+    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
+    return x_train, x_test, y_train, y_test, min_rating, max_rating, n_art, n_users
 
 
-def train_and_save(n_factors, X_train, X_test, y_train, y_test, n_users, n_art, min_rating, max_rating, file_path):
+def train_and_save(n_factors, x_train, x_test, y_train, y_test, n_users, n_art, min_rating, max_rating, file_path):
     """
     To train and save the model for the given artwork
     :param n_factors: number of dimensions for the embeddings
-    :param X_train: Training values
-    :param X_test: Testing values
+    :param x_train: Training values
+    :param x_test: Testing values
     :param y_train: Training labels
     :param y_test: Testing labels
     :param n_users: Users in system
@@ -130,12 +130,11 @@ def train_and_save(n_factors, X_train, X_test, y_train, y_test, n_users, n_art, 
     :param file_path: Path to save model in
     :return:
     """
-    X_train_array = [X_train[:, 0], X_train[:, 1]]
-    X_test_array = [X_test[:, 0], X_test[:, 1]]
-    model = RecommenderV2(n_users, n_art, n_factors, min_rating, max_rating)
+    x_train_array = [x_train[:, 0], x_train[:, 1]]
+    x_test_array = [x_test[:, 0], x_test[:, 1]]
+    model = recommender_v_2(n_users, n_art, n_factors, min_rating, max_rating)
     model.summary()
-    history = model.fit(x=X_train_array, y=y_train, batch_size=128, epochs=10, verbose=1,
-                        validation_data=(X_test_array, y_test))
+    model.fit(x=x_train_array, y=y_train, batch_size=128, epochs=10, verbose=1, validation_data=(x_test_array, y_test))
     tf.saved_model.save(model, os.getcwd() + os.sep + file_path)
 
 
@@ -152,9 +151,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
     server_url = "mongodb+srv://" + args.user_name + ":" + args.password + "@cluster0-mvtbq.mongodb.net/<dbname>?retryWrites=true&w=majority"
     X_train, X_test, y_train, y_test, min_rating, max_rating, movies, users = get_train_test_sets(server_url,
-                                                                              args.collection,
-                                                                              args.rating_collection,
-                                                                              args.user_id,
-                                                                              args.rating, args.id)
+                                                                                                  args.collection,
+                                                                                                  args.rating_collection,
+                                                                                                  args.user_id,
+                                                                                                  args.rating, args.id)
     n = 50
     train_and_save(n, X_train, X_test, y_train, y_test, users, movies, min_rating, max_rating, args.path_to_save_model)
