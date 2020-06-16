@@ -122,10 +122,11 @@ const Details = (props) => {
             </div>
 
             <div id="reviewS">
-            {
+            {   
+                review.length?
                 reviews.map(review=>(
                     <Review key={i++} id={review._id}/>
-                ))
+                )):null
             }
             </div></div>:
             <div>

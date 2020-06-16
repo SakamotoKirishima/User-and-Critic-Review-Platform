@@ -136,7 +136,7 @@ const Profile = (props)=>{
                         </div>
                            
                         <div className="pastUploadDiv">
-                            {   userArtworks?
+                            {   userArtworks.length?
                                 userArtworks.map(artwork=>(
                                     <Upload key={i++} imgLink={artwork.embedded_link} artworkName={artwork.title} desc={artwork.description}/>
                                 )):null
@@ -151,7 +151,7 @@ const Profile = (props)=>{
                            
                         <div>
                             {
-                                userReviews?
+                                userReviews.length?
                                 userReviews.map(review=>(
                                     <Review key={i++} title={review.title} postedBy={review.postedBy} rating={review.rating} review={review.review} date={review.dtu}/>
                                 )):null
