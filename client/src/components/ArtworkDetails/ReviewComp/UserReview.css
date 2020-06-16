@@ -1,0 +1,45 @@
+#profilePic {
+    width: 6em;
+    height: 6em;
+    border-radius: 50%;
+}
+
+#reviewUser {
+    margin-top: 15px;
+    font-family: Roboto;
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+
+color: #000000;
+}
+
+#reviewDate {
+    font-family: Roboto;
+font-weight: 300;
+line-height: 7px;
+font-size: 14px;
+
+color: rgba(0,0,0,0.7)
+}
+
+#reviewRated {
+    font-size: 12px;
+    font-weight: 200;
+    line-height: 30px;
+    color: #000000;
+    margin-right: 5px;
+    padding-bottom: 10px;
+}
+
+#actualReview {
+    margin-top: 10px;
+    border-left: 1px black solid;
+    padding-left: 10px;
+    font-family: Roboto;
+font-weight: 300;
+font-size: 18px;
+line-height: 26px;
+
+color: #000000;
+}

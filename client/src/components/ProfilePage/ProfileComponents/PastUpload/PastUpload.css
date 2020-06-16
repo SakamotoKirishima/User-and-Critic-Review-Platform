@@ -75,6 +75,12 @@
   text-align: left;
 }
 
+#imagica {
+    display: block;
+    border-radius: 17px;
+    width : 18rem;
+      height: 27rem;
+  }
 
 .deleteArt {
     color : #ad0000;

@@ -1,0 +1,418 @@
+#artworkDetails {
+    margin-top: 120px;
+}
+
+
+.reviewCoverImage {
+    border-radius: 25px;
+    width : 12em;
+    height: 18em;
+}
+
+#totalDetailsDiv {
+    margin-top: 10px;
+}
+
+#artTitle {
+
+    font-family: Roboto;
+font-style: normal;
+font-weight: bold;
+font-size: 50px;
+
+color: #000000;
+
+}
+
+#artArtist {
+
+    margin-top: 15px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: 300;
+font-size: 35px;
+line-height: 5px;
+
+color: #000000;
+
+}
+
+#artDescription {
+    margin-top: 30px;
+    font-family: Roboto;
+font-style: normal;
+font-weight: 300;
+font-size: 22px;
+line-height: 30px;
+
+color: #000000;
+}
+
+#reviewButton {
+    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    border : none;
+    text-align: center;
+
+    background: #000000;
+    border-radius: 50px;
+    color: #FFFFFF;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+}
+#reviewButton:hover {
+
+    background-color : #4d4d4d;
+    border : none;
+}
+
+
+
+#ratingTitle {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 5px;
+    padding-bottom: 0px;
+    width: 85%;
+    border-top: 1px black solid;
+    border-bottom: 1px black solid;
+}
+
+.headingRating {
+    font-family: Roboto;
+font-style: normal;
+font-weight: 500;
+font-size: 40px;
+text-align: center;
+
+color: #000000;
+
+}
+
+.subheadingRating {
+    font-family: Roboto;
+font-style: normal;
+font-weight: 300;
+font-size: 20px;
+line-height: 5px;
+
+text-align: center;
+color: rgba(0, 0, 0, 0.7);
+}
+
+#ratingsReviews {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+
+#reviewS {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+.input-tag {
+    background: white;
+    border: 1px solid #d6d6d6;
+    border-radius: 2px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px 5px 0;
+  }
+  
+  .input-tag input {
+    border: none;
+    width: 100%;
+  }
+  
+  .input-tag__tags {
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .input-tag__tags li {
+    align-items: center;
+    background: #3a3a3a;
+    border-radius: 50px;
+    color: white;
+    display: flex;
+    font-weight: 300;
+    list-style: none;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 5px 10px;
+    height: 2rem;    
+  }
+  
+  .input-tag__tags li button {
+    align-items: center;
+    appearance: none;
+    background: #333333;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 12px;
+    /* height: 15px; */
+    justify-content: center;
+    line-height: 0;
+    margin-left: 8px;
+    padding: 0;
+    transform: rotate(45deg);
+    width: 30px;
+  }
+  
+  .input-tag__tags li.input-tag__tags__input {
+    background: none;
+    flex-grow: 1;
+    padding: 0;
+  }
+
+
+  .titlePadding {
+    margin-left: 10%;
+    margin-right: 10%;
+    border-bottom: 1px black solid;
+    margin-top: 8%;
+  }
+
+  .headingStyle {
+    margin-left: 1%;
+    font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2.2em;
+  text-align: center;
+
+  color: #000000;
+
+  }
+
+
+
+  #title {
+    font-family: Roboto;
+    font-size: medium;
+    display: block;
+    padding-left: 5px;
+    padding-right: 5px;
+
+  }
+
+ 
+  #title:focus + label {
+      color:black;
+    }
+  
+    #title:focus {
+      border-bottom: 1px solid black;
+      box-shadow: 0 1px 0 0 black;
+    } 
+
+    #textarea2 {
+      line-height: 1.5em;
+      display: inline;
+      color: #000000;
+      
+    }
+
+    #textarea2:focus + label {
+      color: black;
+      
+    }
+
+    #textarea2:focus {
+      border-bottom: 1px solid black;
+      box-shadow: 0 1px 0 0 black;
+      color: #150098;
+    }
+
+    .inline {
+      display: inline;
+    }
+  /* #titleEnter:focus {
+    
+  }
+
+  #descriptionEnter {
+
+
+  } */
+
+  .critleButton {
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    border : none;
+    text-align: center;
+
+    background: #000000;
+    border-radius: 50px;
+    color: #FFFFFF;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+    margin-right: 0;
+
+    margin-top: 5%;
+}
+
+.critleButton:hover {
+
+    background-color : #4d4d4d;
+    border : none;
+}
+
+#spanImage {
+  line-height: 20px;
+  text-transform: none;
+}
+
+
+#inputButtonCustom {
+
+  font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    border : none;
+    text-align: center;
+
+    background: #000000;
+    border-radius: 50px;
+    color: #FFFFFF;
+    line-height: 0;
+    padding-bottom: 0;
+    height: 2rem;
+
+}
+
+#inputButtonCustom:hover {
+
+  background-color: #4d4d4d;
+
+}
+
+
+#tagsDiv {
+  display: block;
+  border: none;
+  padding-top: 270px;
+}
+
+.customMarginX {
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+.navMargin {
+  /*margin-top : 10px;
+  margin-Bottom : 10px; */
+  margin : 0;
+  padding: 0;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  color: #000000;
+
+} 
+
+#yourRating {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  text-align: center;
+  
+  
+  color: #000000;
+}
+
+#yourReview {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  text-align: center;
+  
+  color: #000000;
+
+}
+
+#ratingInput {
+    margin-top: 10px;
+    width: 15%;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 500;
+    color:black;
+}
+#ratingInput:focus {
+    color: #150098;
+
+}
+
+
+#ratingInput::placeholder {
+    font-size: 12px;
+}
+
+#ratingInputDiv {
+    margin-top: 30px;
+    margin-bottom: 100px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#ratingInput:focus {
+  border-bottom: 1px solid black;
+  box-shadow: 0 1px 0 0 black;
+}
+
+.imagE {
+    width: 4em;
+    height: 6em;
+    border-radius: 17px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#reviewMovie {
+  font-size: 25px;
+  font-weight: 400;
+
+}
+#reviewArtist {
+    line-height: 10px;
+    font-size: 20px;
+    font-weight: 300;
+
+}
+
+#ghuj {
+    text-align: center;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 100px;
+}

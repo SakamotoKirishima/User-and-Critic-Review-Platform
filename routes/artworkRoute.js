@@ -20,6 +20,35 @@ module.exports = (app)=>{
             }
         });
     });
+    app.get('/api/artwork/rank/:id',(req,res)=>{
+        Artwork.find({},function(err,artworks){
+            if(err){
+                 return res.send(err)
+            }
+            else {
+                artworks = (artworks.sort((a, b) => -parseFloat(a.rating+1)/parseFloat(a.ratingCount) + parseFloat(b.rating+1)/parseFloat(b.ratingCount)));
+                // res.send(artworks);
+                for(i=0;i<artworks.length;i++){
+                    if(artworks[i]['_id']==req.params.id){
+                        return res.send(`${i+1}`);
+                    }
+                }
+            }
+        });
+    })
+    app.get('/api/artwork/:id',(req,res)=>{
+        // console.log(req.user)
+        //if(!req.user)
+        //    res.send('ERROR : REQUEST NOT AUTHENTICATED');
+        Artwork.findOne({_id:req.params.id},function(err,artwork){
+            if(err){
+                 return res.send(err)
+            }
+            else {
+                return res.json(artwork);
+            }
+        });
+    });
 
     app.get('/api/artwork/byuser/:postedBy',(req,res)=>{
         // console.log(req.params)

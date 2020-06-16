@@ -12,9 +12,10 @@ const Header = (props)=>{
             default:
                 return (
                     <React.Fragment>
-                        <li><a href="/api/logout/">Logout</a></li>
                         <li><Link to="/profile">Porfile</Link></li>
+                        <li><Link to="/explore">Explore</Link></li>
                         <li><Link to="/upload">Upload</Link></li>
+                        <li><a href="/api/logout/">Logout</a></li>
                     </React.Fragment>
                 )
         }

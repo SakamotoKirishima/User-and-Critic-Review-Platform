@@ -7,10 +7,11 @@ import Artwork from '../ArtworkCard/Artwork'
 const Searchbar = () => {
 
     
-    let artworkArray = ["Starry Nights","Mona Lisa","The Night Watch","Olympia"];
+    let artworkArray = ["Starry Nights","Sunflower","Peace","The Girl With a Pearl Earring"];
     const [searchField,setField]=useState("");
     // var [search,updateSearch]=useState(0);
     var [artworks,searchArtworks]=useState([]);
+    var i=0;
 
     async function searchArt(){
         const res = await Axios.get(`/api/artwork/byname/${searchField}`);
@@ -79,11 +80,15 @@ const Searchbar = () => {
     }
     
     return (
-        <div>
+        <div id="searchResultsDiv">
             {RenderSearch()}
+            {!artworks.length?null:<div id="resultsTitleDiv">
+                    <h1 id="searchresultsTitle">Search Results for '{searchField}'</h1>
+            </div>
+            }
             {
                 artworks.map(artwork=>(
-                                    <Artwork title={artwork.title} postedBy={artwork.postedBy} embedded_link={artwork.embedded_link}/>
+                                    <Artwork title={artwork.title} key={i++} postedBy={artwork.postedBy} embedded_link={artwork.embedded_link} id={artwork._id}/>
                                 ))
             }
         </div>

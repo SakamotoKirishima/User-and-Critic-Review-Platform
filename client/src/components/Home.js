@@ -38,13 +38,13 @@ const Home = ()=>{
     }
 
     return(
-        <div>
-        <div className="card" style={{margin:"10%",padding:"20px",textAlign:"center"}}>
+        
+        <div className="WrapperMain">
+        {/* <div className="card" style={{margin:"10%",padding:"20px",textAlign:"center"}}>
             <div className="row">
                 <a href ="/auth/google" className="waves-effect waves-light btn">SignUp With Google</a>
             </div>
-        </div>
-        <div>
+        </div> */}
                     <Row>
                         <Col className='customCol'>
                             <div>
@@ -101,7 +101,7 @@ const Home = ()=>{
                     </div>
             </div>
 
-        </div>
+        
     )
 }
 

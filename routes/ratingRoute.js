@@ -20,8 +20,33 @@ module.exports=(app)=>{
                 return res.send('Rating Deleted Successfully')    
         })
     })
+    app.get('/api/rating/review/:id',(req,res)=>{
+        Rating.findOne({_id:req.params.id},function(err,rating){
+            console.log(err)
+            if(err)
+                return res.send(err)
+            else
+                return res.send(rating)    
+        })
+    })
+    app.get('/api/rating/getartworkrating/:title/:postedby',(req,res)=>{
+        const title = decodeURI(req.params.title);
+        // const ratedBy = decodeURI(req.params.ratedby);
+        const postedBy = decodeURI(req.params.postedby);
+        // var rating = Rating.findOne({title:title,ratedBy:ratedBy,postedBy:postedBy});
+        // Rating.remove({_id:rating._id});
+        // res.send('DELETED');
+        Rating.find({title:title,postedBy:postedBy},function(err,ratings){
+            console.log(err)
+            if(err)
+                return res.send(err)
+            else
+                return res.send({ratings:ratings})    
+        })
+    })
 
     app.get('/api/rating/getrating/:ratedby',(req,res)=>{
+        console.log('req');
         const ratedBy = decodeURI(req.params.ratedby);
         Rating.find({ratedBy:ratedBy},function(err,ratings){
             console.log(err)

@@ -9,7 +9,8 @@ const upload = (props) => {
                     <h4 id="imageTitle">Volition</h4>   */}
                     {/*console.log(props.user)*/}
                     <div className="containeR">
-                        <img src={props.imgLink} className="imagE" />
+                        <img src={props.imgLink} id="imagica" />
+
                         <div className="overlaY">
                             <div className="texT">
                                 {props.artworkName}

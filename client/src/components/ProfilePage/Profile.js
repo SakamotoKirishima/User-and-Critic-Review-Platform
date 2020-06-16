@@ -97,7 +97,7 @@ const Profile = (props)=>{
     if(!props.user)
         props.history.push('/')
     return(
-        <div>
+        <div className="WrapperMain">
 
             {/*<h1>userid : </h1>
             <div className="card" style={{margin:"10%",padding:"10%",textAlign:"center"}}>
@@ -114,12 +114,12 @@ const Profile = (props)=>{
             </div>*/}
 
             <div>   
-
                     <div style={topMargin}>
                         <Row className="align-items-center" style={userProfileMargin}>
                             <Col style={center}>
                                 <img id="profilePic" src={userdata.picture} />
-                                <h1 id="profileName">{userdata.displayName}</h1>
+                                <h1 id="profileName">{userdata.displayName}<span id="fredit"><a href="" id="freditMast">Edit</a></span></h1>
+                                <h4 id="profileRealName">{userdata.name}</h4>
                                 <h4 id="profileMail">{userdata.googleMail}</h4>
                                 <Link to="/upload">
                                     <button className="critleButtonNew">Upload Artwork</button>

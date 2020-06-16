@@ -4,6 +4,9 @@
     border-radius: 50%;
     margin-bottom: 1em;
 }
+.WrapperMain{
+    overflow-x: hidden;
+}
 
 #profileName {
     font-family: Roboto;
@@ -13,6 +16,29 @@
     color: #000000;
 }
 
+#fredit {
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+#freditMast {
+    color: #000000;
+}
+#freditMast:hover {
+    color : rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+}
+
+#profileRealName {
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2rem;   
+    color: rgba(0, 0, 0, 0.6);
+    margin-top: 10px;
+
+}
 
 #profileMail {
     font-family: Roboto;
@@ -62,6 +88,8 @@
     margin:auto;
     /* padding-left: 50px;
     padding-right: 50px; */
+    /* overflow: auto; */
+    /* background: red; */
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;

@@ -1,39 +1,36 @@
 import React,{useState,useEffect} from 'react'
 import "./Artwork.css"
 import Axios from 'axios'
+import {Link} from 'react-router-dom'
+import ReviewComp from '../../ArtworkDetails/Details'
 
 const Artwork = (props) => {
+    
+    const [show,toggleShow] =  useState(0);
 
-    var firstTym = false;
-
-    const [imgSrc,updateImgSrc]=useState('');
-    useEffect(function effectFunction(){
-        async function fetchImg(){
-            if(!firstTym)
-            {
-                const res = await Axios.get(`/api/artwork/artworkimg/${props.title}/${props.postedBy}`);
-                updateImgSrc(res.data);
-                console.log(res.data);
-                firstTym=true
-            }
-        }
-        fetchImg();
-    },[])
-
+    const handleClick = (e) =>{
+        e.preventDefault();
+        toggleShow(!show);
+        console.log('yepyep');
+    }
+    
     return (
             <div id="pastUploadCard" >
-                    
-                    <div className="containeR">
-                        <img src={props.embedded_link} id="imagica" />
-                        <div className="overlaY">
-                            <div className="texT">
-                                {props.title}
-                            </div>
-                            <div className="texT2">
-                                {props.postedBy}
+                <Link to={`/details/${props.id}`} state={{title:props.title,postedBy:props.postedBy}}>
+                        <div className="containeR">
+                            
+                                <img src={props.embedded_link} id="imagica" />
+                            
+                            <div className="overlaY">
+                                <div className="texT">
+                                    {props.title}
+                                </div>
+                                <div className="texT2">
+                                    {props.postedBy}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                </Link>
             </div>
 
     );

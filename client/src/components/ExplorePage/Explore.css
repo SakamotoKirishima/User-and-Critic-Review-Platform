@@ -12,7 +12,7 @@
     margin:auto;
     /* padding-left: 50px;
     padding-right: 50px; */
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
 }

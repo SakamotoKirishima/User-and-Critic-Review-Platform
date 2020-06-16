@@ -9,7 +9,10 @@
     margin-left : 15px
 
 }
-
+.WrapperMain{
+    padding: 2px;
+    overflow-x: hidden;
+}
 .navMargin {
     margin-right : 30px;
     margin-top : 10px;

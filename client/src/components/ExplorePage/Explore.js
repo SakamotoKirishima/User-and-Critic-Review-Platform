@@ -1,13 +1,29 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import "./Explore.css"
 import Artwork from "./ArtworkCard/Artwork"
-
+import Axios from 'axios'
 import Search from "./SearchBar/Search"
+import { use } from 'passport'
 
 
 
 
-const explore = () => {
+const Explore = () => {
+
+    const [artworks,searchArtworks] = useState([]);
+    
+    var i = 0 ;
+    useEffect(function effectFunction(){
+        async function fetchArtworks(){
+            const res = await Axios.get(`api/artworks`);
+            // const json = await res.json();
+            console.log(res.data)
+            searchArtworks(res.data.artworks);
+            // console.log(res.data);
+        }
+        fetchArtworks()
+    },[])
+
 
     return (
         <div>
@@ -22,9 +38,11 @@ const explore = () => {
                         </div>
                            
                         <div className="pastUploadDiv">
-
-                            <Artwork title='helo' postedBy='Male' embedded_link='https://i.imgur.com/k9xY1hE.jpg'/>
-
+                            {
+                                artworks.map(artwork=>(
+                                    <Artwork key={i++}  id={artwork._id} title={artwork.title} postedBy={artwork.postedBy} embedded_link={artwork.embedded_link}/>
+                                ))
+                            }
                         </div>
 
                 </div>
@@ -36,7 +54,11 @@ const explore = () => {
                         </div>
                            
                         <div className="pastUploadDiv">
-                        <Artwork title='helo' postedBy='Male' embedded_link='https://i.imgur.com/k9xY1hE.jpg' />
+                        {
+                                (artworks.sort((a, b) => -parseFloat(a.ratingCount) + parseFloat(b.ratingCount))).map(artwork=>(
+                                    <Artwork key={i++}  id={artwork._id} title={artwork.title} postedBy={artwork.postedBy} embedded_link={artwork.embedded_link}/>
+                                ))
+                        }
 
                         </div>
                 </div>
@@ -48,7 +70,11 @@ const explore = () => {
                         </div>
                            
                         <div className="pastUploadDiv">
-                        <Artwork title='helo' postedBy='Male' embedded_link='https://i.imgur.com/k9xY1hE.jpg'/> 
+                        {
+                                (artworks.sort((a, b) => -parseFloat(a.rating+1)/parseFloat(a.ratingCount) + parseFloat(b.rating+1)/parseFloat(b.ratingCount))).map(artwork=>(
+                                    <Artwork key={i++} id={artwork._id} title={artwork.title} postedBy={artwork.postedBy} embedded_link={artwork.embedded_link}/>
+                                ))
+                        }
 
                         </div>
 
@@ -64,4 +90,4 @@ const explore = () => {
 
 }
 
-export default explore;
+export default Explore;

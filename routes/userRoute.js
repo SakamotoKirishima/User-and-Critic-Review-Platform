@@ -30,6 +30,17 @@ module.exports = (app)=>{
             }
         })
     })
+    app.get('/api/user/profileimg/:name',(req,res)=>{
+        const name = decodeURI(req.params.name)
+        User.findOne({displayName:name},function(err,user){
+            console.log(err)
+            const pic= user.picture;
+            if(err)
+                return res.send(err)
+            else
+                return res.send(pic)
+        })
+    })
     app.put('/api/updateGender/:id/:setgender',(req,res)=>{
         //console.log('ehere')
         User.findOne({googleId:req.params.id})
