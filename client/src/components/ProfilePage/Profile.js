@@ -150,7 +150,9 @@ const Profile = (props)=>{
                         </div>
                            
                         <div>
+                        {console.log(userReviews.length)}
                             {
+                                
                                 userReviews.length?
                                 userReviews.map(review=>(
                                     <Review key={i++} title={review.title} postedBy={review.postedBy} rating={review.rating} review={review.review} date={review.dtu}/>
