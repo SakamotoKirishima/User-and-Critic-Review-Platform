@@ -21,26 +21,29 @@ def convert(csv_file_path, json_file_path):
         json_dict = dict()
         i = 0
         for item in row_list:
-            if type('s') == type(item) and (item.startswith('[') or item.startswith('{')):
-                try:
-                    json_dict[json_keys[i]] = ast.literal_eval(item)
-                except:
-                    if item == numpy.nan:
-                        json_dict[json_keys[i]] = "nan"
-                    else:
-                        json_dict[json_keys[i]] = item
-            elif item == numpy.nan:
-                json_dict[json_keys[i]] = "nan"
-            else:
-                json_dict[json_keys[i]] = item
+            json_dict[json_keys[i]] = get_value(item)
             i += 1
         json_str = json.dumps(json_dict)
         json_dict_list.append(json_str + '\n')
+        save_file(json_file_path, json_dict_list)
 
 
-def save_file(json_file_path, json_dict_list):
-    fp = open(json_file_path, 'w')
-    fp.writelines(json_dict_list)
+def get_value(json_value):
+    value = None
+    if type('s') == type(json_value) and (json_value.startswith('[') or json_value.startswith('{')):
+        try:
+            value = ast.literal_eval(json_value)
+        except ValueError:
+            if json_value == numpy.nan:
+                value = 'nan'
+            else:
+                value = json_value
+    return value
+
+
+def save_file(file_path, lines):
+    fp = open(file_path, 'w')
+    fp.writelines(lines)
     fp.close()
 
 

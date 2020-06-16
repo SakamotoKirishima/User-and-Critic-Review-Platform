@@ -85,7 +85,6 @@ def get_train_test_sets(server, req_collection, req_rating_collection, user_id, 
     for row in art_data:
         row_values = row.values()
         art_data_values.append(row_values)
-    art = pd.DataFrame(art_data_values, columns=art_data[0].keys())
     rating_data = list(db[req_rating_collection].find({}))
     art_rating_data_values = list()
     for row in rating_data:
