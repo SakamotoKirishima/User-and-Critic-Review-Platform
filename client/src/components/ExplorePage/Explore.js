@@ -4,12 +4,25 @@ import Artwork from "./ArtworkCard/Artwork"
 import Axios from 'axios'
 import Search from "./SearchBar/Search"
 import { use } from 'passport'
+import {connect} from 'react-redux'
 
 
 
-
-const Explore = () => {
-
+const Explore = (props) => {
+    const [userdata,setUserData]=useState({
+        
+        displayName:"Loading",
+        
+    })
+    useEffect(()=>{
+        if(props.user){
+            console.log(props.user.displayName);
+            setUserData({
+                displayName:props.user.displayName,
+                
+            })  
+        }
+    },[]);
     const [artworks,searchArtworks] = useState([]);
     
     var i = 0 ;
@@ -40,7 +53,7 @@ const Explore = () => {
                         <div className="pastUploadDiv">
                             {
                                 artworks.map(artwork=>(
-                                    <Artwork key={i++}  id={artwork._id} title={artwork.title} postedBy={artwork.postedBy} embedded_link={artwork.embedded_link}/>
+                                    <Artwork key={i++} displayName={userdata.displayName} id={artwork._id} title={artwork.title} postedBy={artwork.postedBy} embedded_link={artwork.embedded_link}/>
                                 ))
                             }
                         </div>
@@ -56,7 +69,7 @@ const Explore = () => {
                         <div className="pastUploadDiv">
                         {
                                 (artworks.sort((a, b) => -parseFloat(a.ratingCount) + parseFloat(b.ratingCount))).map(artwork=>(
-                                    <Artwork key={i++}  id={artwork._id} title={artwork.title} postedBy={artwork.postedBy} embedded_link={artwork.embedded_link}/>
+                                    <Artwork key={i++} displayName={userdata.displayName} id={artwork._id} title={artwork.title} postedBy={artwork.postedBy} embedded_link={artwork.embedded_link}/>
                                 ))
                         }
 
@@ -72,7 +85,7 @@ const Explore = () => {
                         <div className="pastUploadDiv">
                         {
                                 (artworks.sort((a, b) => -parseFloat(a.rating+1)/parseFloat(a.ratingCount) + parseFloat(b.rating+1)/parseFloat(b.ratingCount))).map(artwork=>(
-                                    <Artwork key={i++} id={artwork._id} title={artwork.title} postedBy={artwork.postedBy} embedded_link={artwork.embedded_link}/>
+                                    <Artwork key={i++} displayName={userdata.displayName} id={artwork._id} title={artwork.title} postedBy={artwork.postedBy} embedded_link={artwork.embedded_link}/>
                                 ))
                         }
 
@@ -89,5 +102,9 @@ const Explore = () => {
     );
 
 }
-
-export default Explore;
+const mapStateToProps=(state)=>{
+    return{
+        user:state.auth
+    }
+}
+export default connect(mapStateToProps)(Explore);

@@ -20,7 +20,7 @@ function App(props) {
       <Route path="/profile" component={Profile} />
       <Route path="/upload" component={Upload} />
       <Route path="/explore" component={Explore}/>
-      <Route path="/details/:id" component={Review}/>
+      <Route path="/details/:id/:displayName" component={Review}/>
     </BrowserRouter>
   );
 }

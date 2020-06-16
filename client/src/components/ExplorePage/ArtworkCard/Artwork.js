@@ -16,7 +16,7 @@ const Artwork = (props) => {
     
     return (
             <div id="pastUploadCard" >
-                <Link to={`/details/${props.id}`} state={{title:props.title,postedBy:props.postedBy}}>
+                <Link to={`/details/${props.id}/${props.displayName}`} state={{title:props.title,postedBy:props.postedBy}}>
                         <div className="containeR">
                             
                                 <img src={props.embedded_link} id="imagica" />

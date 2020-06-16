@@ -1,14 +1,15 @@
 import React,{useState,useEffect} from 'react'
+
 import "./Details.css"
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Axios from 'axios'
 import Review from "./ReviewComp/UserReview"
 import Nav from 'react-bootstrap/Nav'
-
+// import Axios from 'axios'
 const Details = (props) => {
     // const {pas} = props.location.state
-
+    
     // var click = false;
     const center = {
         textAlign : "center"
@@ -24,6 +25,8 @@ const Details = (props) => {
     const [reviews,getReviews] = useState([]);
     const [rank,getRank]= useState('');
     const [click,toggleClick]=useState(0);
+    const [rating,setRating]=useState('');
+    const [userReview,setUserReview]=useState('');
     useEffect(function effectFunction(){
         let isCancelled = false;
         async function fetchArtwork(){
@@ -47,7 +50,28 @@ const Details = (props) => {
                 isCancelled = true;
               };
     },[])
-
+    async function submitReview(body){
+        const res = await Axios.post('/api/rating/rateartwork',body);
+        return res;
+    }
+    const  handleReviewSubmit= async(e)=>{
+        e.preventDefault();
+        const body = {
+            "title":details.title,
+            "postedBy":details.postedBy,
+            "ratedBy":props.match.params.displayName,
+            "rating":rating,
+            "review":userReview
+        }
+        const res = await submitReview(body);
+        handleCancelClick(null);
+        console.log(res);
+    }
+    const handleCancelClick=(e)=>{
+        if(e)
+            e.preventDefault();
+        toggleClick(0)
+    }
     return (
         <div>
             {!click?
@@ -106,7 +130,7 @@ const Details = (props) => {
             </div></div>:
             <div>
             <Row className="titlePadding">
-              <h1 className="headingStyle">Post Review for Parasite</h1>
+              <h1 className="headingStyle">Post Review for {details.title} by {details.postedBy}</h1>
 
             </Row>
             
@@ -117,7 +141,7 @@ const Details = (props) => {
 
                 <div id="ratingInputDiv">
                     <h1 id="yourRating">Your Rating</h1>
-                    <input type="text" id="ratingInput" placeholder="Your Rating"/>
+                    <input type="text" id="ratingInput" placeholder="Your Rating" onChange={e => setRating(e.target.value)}/>
                     <h6 id="outOf">out of 5</h6>
 
                 </div>
@@ -128,13 +152,13 @@ const Details = (props) => {
 
 
                 <div className="input-field col s12 customMarginX">
-                    <textarea id="textarea2" class="materialize-textarea"></textarea>
+                    <textarea id="textarea2" class="materialize-textarea" onChange={e => setUserReview(e.target.value)}></textarea>
                     <label for="textarea2">Write your review</label>
                 </div>
 
-                    <button className="critleButton input_img__button">Post Review</button>
+                    <button className="critleButton input_img__button" onClick={(e)=>handleReviewSubmit(e)}>Post Review</button>
                     {/* <Nav.Link href="#About" className="navMargin">Cancel</Nav.Link> */}
-                    <button className="navMargin" onClick={(e)=>{e.preventDefault();toggleClick(0)}}>Cancel</button>
+                    <button className="navMargin" onClick={(e)=>handleCancelClick(e)}>Cancel</button>
                 </Col>
                 <Col></Col>
             </Row>

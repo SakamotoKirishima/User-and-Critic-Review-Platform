@@ -67,8 +67,9 @@ const Profile = (props)=>{
         }
     },[])
 
+    const [editName,toggleEdit]= useState(0);
 
-    // const [curDisName,setDispName]=useState(props.user?props.user.displayName:'');
+    const [curDisName,setDispName]=useState(props.user?props.user.displayName:'');
     // function handleSubmit(event){
     //     event.preventDefault();
     //     Axios.put(`/api/update/${userdata.googleId}/${curDisName}`).then(response=>{
@@ -118,7 +119,8 @@ const Profile = (props)=>{
                         <Row className="align-items-center" style={userProfileMargin}>
                             <Col style={center}>
                                 <img id="profilePic" src={userdata.picture} />
-                                <h1 id="profileName">{userdata.displayName}<span id="fredit"><a href="" id="freditMast">Edit</a></span></h1>
+                                <h1 id="profileName">{userdata.displayName}<span id="fredit"><button id="freditMast" onClick={(e)=>{e.preventDefault();toggleEdit(!editName)}}>Edit</button></span></h1>
+                                {editName?<div><input onChange={e => setDispName(e.target.value)} vlaue={curDisName}></input><button onClick={(e)=>{e.preventDefault();props.updateUserDetails(curDisName);}}>Change Name</button><button onClick={(e)=>{e.preventDefault();toggleEdit(!editName)}}>Cancel</button></div>:null}
                                 <h4 id="profileRealName">{userdata.name}</h4>
                                 <h4 id="profileMail">{userdata.googleMail}</h4>
                                 <Link to="/upload">
@@ -156,11 +158,6 @@ const Profile = (props)=>{
                         </div>
                         
                     </div>
-
-
-
-
-
             </div>
 
 

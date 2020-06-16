@@ -1,5 +1,7 @@
 const mongoose= require('mongoose')
 const User = mongoose.model('users')
+const Rating = mongoose.model('ratings')
+const Artwork = mongoose.model('artworks')
 
 module.exports = (app)=>{
 
@@ -11,22 +13,70 @@ module.exports = (app)=>{
             if(userchk)
                 return res.send('Name Not Available');
             else{
+                var prevName;
                 User.findOne({googleId:req.params.id})
                 .then((existingUser)=>{
                     if(existingUser)
                     {
+                        // console.log(req.params.id)
+                        prevName = existingUser.displayName;
+                        // console.log(existingUser.displayName)
+                        // console.log(prevName+" dwadadwada");
                         //console.log(existingUser)
                         existingUser.update(
                             {displayName:req.params.newDispName},
                             req.body,
                             function(err, result){
-                                res.send(
+                                console.log(
                                     (err === null) ? req.params.newDispName: {msg: err}
                                 );
                             }
                             );
                     }
-                })
+                    var myquery = { postedBy: prevName };
+                    // console.log(prevName)
+                    var newvalues = {$set: {postedBy: req.params.newDispName} };
+                    var myquery2 = { ratedBy: prevName };
+                    var newvalues2 = {$set: {ratedBy: req.params.newDispName} };
+                    // Rating.find({ratedBy:"Radiant"},(err,ratings)=>{
+                    //     if (err) throw err;
+                    //     ratings.map(rating=>{
+                    //         console.log(rating)
+                    //     })
+                    // })
+                    Rating.updateMany(myquery,newvalues,{upsert: false},function(err,result){
+                    if (err) throw err;
+                    // console.log(result);
+                        Rating.updateMany(myquery2,newvalues2,{upsert: false},function(err,result){
+                            if (err) throw err;
+                            // console.log(result);
+                            Artwork.updateMany(myquery,newvalues,{upsert: false},function(err,result){
+                                if (err) throw err;
+                                // console.log(result);
+                                res.send('OK');
+                            })
+                        });
+                    });
+                    
+                    
+                });
+                
+                
+                
+                // Rating.updateMany(myquery,newvalues,{upsert: false},function(err,result){
+                //     if (err) throw err;
+                //     console.log(result);
+                // });
+                // Rating.updateMany(myquery2,newvalues2,{upsert: false},function(err,result){
+                //     if (err) throw err;
+                //     console.log(result);
+                // });
+                // Artwork.updateMany(myquery,newvalues,{upsert: false},function(err,result){
+                //     if (err) throw err;
+                //     console.log(result);
+                //     res.send('OK');
+                // })
+                
             }
         })
     })
