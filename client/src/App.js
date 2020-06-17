@@ -14,7 +14,7 @@ import Review from './components/ArtworkDetails/Details'
 function App(props) {
     useEffect(()=>{
         props.fetch_user()
-        console.log(props.state)
+        // console.log(props.state)
     },[])
   return (
 

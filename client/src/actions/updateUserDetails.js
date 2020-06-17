@@ -5,8 +5,8 @@ export const handleSubmit = (newName)=>{
         var userdata=getState()
         console.log(userdata)
         Axios.put(`/api/update/${userdata.auth.googleId}/${newName}`).then(response=>{
-            console.log(response);
-            dispatch({type:'UPDATE_DISPLAY_NAME',payload:{...response}});
+            // console.log(response);
+            dispatch({type:'UPDATE_DISPLAY_NAME',payload:{...response.data}});
             if(response.data.msg==='Name Updated Successfully')
             {
                 alert('Name Updated Successfully')
