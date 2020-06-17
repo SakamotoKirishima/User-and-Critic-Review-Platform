@@ -31,6 +31,7 @@ const Review = (props) => {
         e.preventDefault();
         const res = await Axios.delete(`/api/rating/removerating/${encodeURI(props.title)}/${encodeURI(props.postedBy)}/${encodeURI(props.ratedBy)}`);
         console.log(res.data);
+        props.callBack(e);
         // console.log(props.ratedBy)
         // props.history.push('/profileAdmin');
     }

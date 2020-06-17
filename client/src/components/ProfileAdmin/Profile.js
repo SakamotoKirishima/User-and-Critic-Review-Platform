@@ -5,7 +5,10 @@ import {handleSubmit} from '../../actions/updateUserDetails'
 
 import Upload from "./ProfileComponents/PastUpload/PastUpload"
 import Review from "./ProfileComponents/PastReview/PastReview"
+import User from './ProfileComponents/UsersData/UserData'
 import {Link} from 'react-router-dom'
+import { Redirect } from "react-router";
+import { withRouter } from 'react-router-dom';
 
 import "./Profile.css"
 import Col from 'react-bootstrap/Col'
@@ -96,8 +99,6 @@ const Profile = (props)=>{
     //     })
     // }
     //if(props.user)
-    //    var curDisName = props.user.displayName
-
     const userProfileMargin = {
         marginTop : "2em"
     }
@@ -113,7 +114,7 @@ const Profile = (props)=>{
         props.history.push('/')
     return(
         <div className="WrapperMain">
-
+            <button onClick={(e)=>{e.preventDefault();alert('Done');props.history.push("/")}}></button>
             {/*<h1>userid : </h1>
             <div className="card" style={{margin:"10%",padding:"10%",textAlign:"center"}}>
                 <h2>{userdata.name}</h2>
@@ -133,13 +134,10 @@ const Profile = (props)=>{
                         <Row className="align-items-center" style={userProfileMargin}>
                             <Col style={center}>
                                 <img id="profilePic" src={userdata.picture} />
-                                <h1 id="profileName">{userdata.displayName}<span id="fredit"><button id="freditMast" onClick={(e)=>{e.preventDefault();toggleEdit(!editName)}}>Edit</button></span></h1>
+                                <h1 id="profileName">{userdata.displayName} #SuperUser</h1>
                                 {editName?<div><input onChange={e => setDispName(e.target.value)} vlaue={curDisName}></input><button onClick={(e)=>{e.preventDefault();props.updateUserDetails(curDisName);}}>Change Name</button><button onClick={(e)=>{e.preventDefault();toggleEdit(!editName)}}>Cancel</button></div>:null}
                                 <h4 id="profileRealName">{userdata.name}</h4>
                                 <h4 id="profileMail">{userdata.googleMail}</h4>
-                                <Link to="/upload">
-                                    <button className="critleButtonNew">Upload Artwork</button>
-                                </Link>
                             </Col>
                         </Row>
                     </div>
@@ -152,7 +150,7 @@ const Profile = (props)=>{
                         <div className="pastUploadDiv">
                             {   userArtworks.length?
                                 userArtworks.map(artwork=>(
-                                    <Upload key={i++} postedBy={artwork.postedBy} imgLink={artwork.embedded_link} artworkName={artwork.title} desc={artwork.description}/>
+                                    <Upload key={i++} callBack={(e)=>{e.preventDefault();alert('Deleted Successfully');props.history.push("/")}} postedBy={artwork.postedBy} imgLink={artwork.embedded_link} artworkName={artwork.title} desc={artwork.description}/>
                                 )):null
                             }
                         </div>
@@ -164,15 +162,28 @@ const Profile = (props)=>{
                         </div>
                            
                         <div>
-                        {console.log(userReviews.length)}
+                        {/* {console.log(userReviews.length)} */}
                             {
                                 userReviews.length?
                                 userReviews.map(review=>(
-                                    <Review key={i++} ratedBy={review.ratedBy} title={review.title} postedBy={review.postedBy} rating={review.rating} review={review.review} date={review.dtu}/>
+                                    <Review key={i++} ratedBy={review.ratedBy} callBack={(e)=>{e.preventDefault();alert('Deleted Successfully');props.history.push("/")}} title={review.title} postedBy={review.postedBy} rating={review.rating} review={review.review} date={review.dtu}/>
                                 )):null
                             }
                         </div>
-                        
+                    </div>
+
+                    <div className="center">
+                        <div className="profileSubTitleDiv">
+                            <h1 className="profileSubTitle">All Users</h1>
+                        </div>
+                           
+                        <div className="pastUploadDiv">
+                            {   users.length?
+                                users.map(user=>(
+                                    <User key={i++} picture={user.picture} callBack={(e)=>{e.preventDefault();alert('Deleted Successfully');props.history.push("/")}} displayName={user.displayName} googleMail={user.googleMail} googleId={user.googleId}/>
+                                )):null
+                            }
+                        </div>
                     </div>
             </div>
 
@@ -192,4 +203,4 @@ const mapDispatchToProps=(dispatch)=>{
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Profile);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Profile));

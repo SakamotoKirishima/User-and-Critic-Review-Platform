@@ -120,7 +120,28 @@ module.exports = (app)=>{
     })
 
     app.delete('/api/delete/:id',(req,res)=>{
-        User.findOneAndDelete({googleId:req.params.id}).then(res.redirect('/'))
+        var name;
+        User.findOne({googleId:req.params.id},function(err,result){
+            if (err) throw err;
+            else {
+                name = result.displayName;
+                User.findOneAndDelete({googleId:req.params.id}).then(
+                    Rating.deleteMany({postedBy:name},function(err,result){
+                        console.log(result);
+                        Rating.deleteMany({ratedBy:name},function(err,result){
+                            console.log(result)
+                            Artwork.deleteMany({postedBy:name},function(err,result){
+                                res.redirect('/')
+                            })
+                        })
+                    })
+                )
+            }
+        })
+        // User.findOneAndDelete({googleId:req.params.id}).then(
+            
+        //     res.redirect('/')
+        // )
     })
 
 }

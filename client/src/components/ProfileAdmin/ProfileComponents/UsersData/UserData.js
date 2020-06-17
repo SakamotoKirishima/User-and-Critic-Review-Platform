@@ -1,78 +1,41 @@
-import React,{useState,useEffect} from 'react'
-import "./PastReview.css"
+import React from 'react'
+import "./PastUpload.css"
+import {connect} from 'react-redux'
+import Axios from 'axios'
 
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
-import Axios from 'axios';
 
-const Review = (props) => {
-    
-    const leftMar = {
-        marginLeft : "20px",
-        marginTop : "20px"
-    }
-    
-    var firstTym = false;
-
-    const [imgSrc,updateImgSrc]=useState('');
-    useEffect(function effectFunction(){
-        async function fetchImg(){
-            if(!firstTym)
-            {
-                const res = await Axios.get(`/api/artwork/artworkimg/${props.title}/${props.postedBy}`);
-                updateImgSrc(res.data);
-                firstTym=true
-            }
-        }
-        fetchImg();
-    },[])
-
+const upload =(props) => {
     const handleClick=  async (e)=>{
         e.preventDefault();
-        const res = await Axios.delete(`/api/rating/removerating/${encodeURI(props.title)}/${encodeURI(props.postedBy)}/${encodeURI(props.ratedBy)}`);
-        console.log(res.data);
-        // console.log(props.ratedBy)
+        const res = await Axios.delete(`/api/delete/${props.googleId}`);
+        props.callBack(e);
         // props.history.push('/profileAdmin');
     }
-
     return (
-        <div id="reviewDiv">
-            <Row>
-                <Col xs={1}>
-                <img className="reviewCoverImage" src={imgSrc}/>
-                </Col>
-                <Col >
-                    <div style={leftMar}>
-                        <h1 className="titlE" >{props.title}</h1>
-                        <h1 className="artisT" >{props.postedBy}</h1>
-                        <h4 className="ratinG">Rating</h4>
-                        <h4 className="ratingNo">{props.rating}</h4>
-
+            <div id="pastUploadCard" >
+                    {/* <img src={require('./ReviewAssets/SamplePic.jpg')} className="coverImage" />
+                    <h4 id="imageTitle">Volition</h4>   */}
+                    {/*console.log(props.user)*/}
+                    <div className="containeR">
+                        <img src={props.picture} id="imagica" />
+                        <div className="overlaY">
+                            <div className="texT">
+                                {props.displayName}
+                            </div>
+                            <div className="texT2">
+                                {props.googleMail}
+                            </div>
+                            
+                        </div>
                     </div>
-                    
-                    
-                </Col>
-                <Col xs={6}></Col>
-                <Col xs={2}>
-                    <h6 className="datE">23 March, 2020</h6>
-                </Col>
-            </Row>
-            
-            <Row>
-            <Col xs={1}></Col>
-                <Col>
-                <p className="reviewTitle">Review</p>
-                <p className="actualReview">{props.review}</p>
-                <button onClick={(e)=>handleClick(e)}>X</button>
-                </Col>
-            <Col xs={1}></Col>
-            
-            </Row>
-                       
-            
-            
-        </div>
+                    <button onClick={(e)=>handleClick(e)}>X</button>
+            </div>
+
     );
 }
-
-export default Review;
+const mapStateToProps=(state)=>{
+    return {
+        user:state.auth
+    }
+}
+export default connect(mapStateToProps)(upload);

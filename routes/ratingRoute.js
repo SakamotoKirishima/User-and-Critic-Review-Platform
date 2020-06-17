@@ -6,15 +6,9 @@ const Artwork = mongoose.model('artworks')
 module.exports=(app)=>{
 
     app.delete('/api/rating/removerating/:title/:postedby/:ratedby',(req,res)=>{
-        // const title = decodeURI(req.params.title);
-        // const ratedBy = decodeURI(req.params.ratedby);
-        // const postedBy = decodeURI(req.params.postedby);
-        console.log(title);
-        console.log(ratedBy);
-        console.log(postedBy);
-        // var rating = Rating.findOne({title:title,ratedBy:ratedBy,postedBy:postedBy});
-        // Rating.remove({_id:rating._id});
-        // res.send('DELETED');
+        const title = decodeURI(req.params.title);
+        const ratedBy = decodeURI(req.params.ratedby);
+        const postedBy = decodeURI(req.params.postedby);
         Rating.findOneAndDelete({title:title,ratedBy:ratedBy,postedBy:postedBy},function(err,rating){
             console.log(err)
             if(err)
@@ -34,11 +28,7 @@ module.exports=(app)=>{
     })
     app.get('/api/rating/getartworkrating/:title/:postedby',(req,res)=>{
         const title = decodeURI(req.params.title);
-        // const ratedBy = decodeURI(req.params.ratedby);
         const postedBy = decodeURI(req.params.postedby);
-        // var rating = Rating.findOne({title:title,ratedBy:ratedBy,postedBy:postedBy});
-        // Rating.remove({_id:rating._id});
-        // res.send('DELETED');
         Rating.find({title:title,postedBy:postedBy},function(err,ratings){
             console.log(err)
             if(err)
@@ -57,7 +47,6 @@ module.exports=(app)=>{
         })
     })
     app.get('/api/rating/getrating/:ratedby',(req,res)=>{
-        // console.log('req');
         const ratedBy = decodeURI(req.params.ratedby);
         Rating.find({ratedBy:ratedBy},function(err,ratings){
             console.log(err)
@@ -73,7 +62,6 @@ module.exports=(app)=>{
             postedBy:req.body.postedBy,
             ratedBy:req.body.ratedBy}).then((existingRating)=>{
                 if(existingRating){
-                    //console.log('here')
                     const delta = req.body.rating-existingRating.rating;
                     if(delta)
                     {
@@ -96,7 +84,6 @@ module.exports=(app)=>{
                     }
                 }
                 else{
-                    //console.log('babbt')
                     var ratingDoc =new Rating({
                         title:req.body.title,
                         postedBy:req.body.postedBy,
