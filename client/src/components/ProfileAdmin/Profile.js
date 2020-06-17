@@ -2,20 +2,34 @@ import React,{useState,useEffect} from 'react';
 import {connect} from 'react-redux'
 import Axios from 'axios';
 import {handleSubmit} from '../../actions/updateUserDetails'
-
+import { LineChart, Line , CartesianGrid, XAxis, YAxis,Tooltip,Legend,PieChart,Pie  } from 'recharts';
+import artworkData from './MOCK_DATA.json'
+import DataToPlot from './DataKeyVal.json'
 import Upload from "./ProfileComponents/PastUpload/PastUpload"
 import Review from "./ProfileComponents/PastReview/PastReview"
 import User from './ProfileComponents/UsersData/UserData'
 import {Link} from 'react-router-dom'
 import { Redirect } from "react-router";
 import { withRouter } from 'react-router-dom';
-
+import moment from 'moment'
 import "./Profile.css"
+import fs from 'fs';
+
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
+const platformUsers = [
+    { name: 'Personal Computers', value: 2400 }, { name: 'Mobiles', value: 9800 },
+    { name: 'Laptops', value: 1398 }, { name: 'Tablets', value: 4532 }
+  ];
+  const uploadByCategory = [
+    { name: 'Artworks', value: 481 }, { name: 'Books', value: 910 },
+    { name: 'Movies', value: 731 }, { name: 'Songs', value: 1231 }
+  ];
+
 const Profile = (props)=>{
     var Artworks=[];
+
     var i=0;
     const [userdata,setUserData]=useState({
         name:"Loading",
@@ -55,9 +69,34 @@ const Profile = (props)=>{
             fetchArtworks()
         }
     },[])
-
+    var occurences;
+    var resultDates;
     const [userReviews,updateUserReviews] = useState([]);
+    const handleSaveToPC = jsonData => {
+        const fileData = JSON.stringify(jsonData);
+        const blob = new Blob([fileData], {type: "text/plain"});
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.download = 'DataKeyVal.json';
+        link.href = url;
+        link.click();
+      }
     useEffect(function effectFunction(){
+        // artworkData.sort(custom_sort);
+        // occurences = artworkData.reduce(function (r, row) {
+        //     r[row.dtu] = ++r[row.dtu] || 1;
+        //     return r;
+        // }, {});
+        // resultDates = Object.keys(occurences).map(function (key) {
+        //     return { key: key, value: occurences[key] };
+        // });
+        // console.log(typeof(resultDates))
+        // handleSaveToPC(resultDates);
+        // fs.writeFile("keyValueDate.txt", resultDates, function(err) {
+        //     if (err) {
+        //         console.log(err);
+        //     }
+        // });
         if(props.user)
         {
             async function fetchReviews(){
@@ -109,25 +148,23 @@ const Profile = (props)=>{
     const topMargin = {
         marginTop : "100px"
     }
+    
+    function custom_sort(a, b) {
+        return new Date(a.dtu).getTime() - new Date(b.dtu).getTime();
+    }
+
+    function formatXAxis(tickItem) {
+        console.log(moment(tickItem).format('MMM Do YY'))
+        return moment(tickItem).format('MMM Do YY')
+    }
 
     if(!props.user)
         props.history.push('/')
     return(
         <div className="WrapperMain">
-            <button onClick={(e)=>{e.preventDefault();alert('Done');props.history.push("/")}}></button>
-            {/*<h1>userid : </h1>
-            <div className="card" style={{margin:"10%",padding:"10%",textAlign:"center"}}>
-                <h2>{userdata.name}</h2>
-                <img className="circle" src={userdata.picture}></img>
-                <h2>{userdata.displayName}</h2>
-                <form onSubmit={(e)=>{e.preventDefault();props.updateUserDetails(curDisName);}}>
-                <img src='/userimages/Witcher.jpg' style={{width:'100px',height:'100px',backgroundColor:'red'}} alt="loaddddd"/>
-                <input placeholder="Placeholder" id="first_name" type="text" className="validate" value={curDisName} onChange={e => setDispName(e.target.value)}></input>
-                </form>
-                <h2>{userdata.googleMail}</h2>
-                <h2>{userdata.dateOfJoining}</h2>
-                <h2>{userdata.genderType}</h2>
-            </div>*/}
+            {editName?
+                <div>
+            <button onClick={(e)=>{e.preventDefault();toggleEdit(0)}}></button>
 
             <div>   
                     <div style={topMargin}>
@@ -135,7 +172,6 @@ const Profile = (props)=>{
                             <Col style={center}>
                                 <img id="profilePic" src={userdata.picture} />
                                 <h1 id="profileName">{userdata.displayName} #SuperUser</h1>
-                                {editName?<div><input onChange={e => setDispName(e.target.value)} vlaue={curDisName}></input><button onClick={(e)=>{e.preventDefault();props.updateUserDetails(curDisName);}}>Change Name</button><button onClick={(e)=>{e.preventDefault();toggleEdit(!editName)}}>Cancel</button></div>:null}
                                 <h4 id="profileRealName">{userdata.name}</h4>
                                 <h4 id="profileMail">{userdata.googleMail}</h4>
                             </Col>
@@ -186,8 +222,35 @@ const Profile = (props)=>{
                         </div>
                     </div>
             </div>
-
-
+            </div>
+            :
+            <div>
+                <button onClick={(e)=>{e.preventDefault();toggleEdit(1)}}></button>
+                <LineChart
+                    width={1500}
+                    height={900}
+                    data={DataToPlot}
+                    margin={{
+                    top: 5, right: 30, left: 20, bottom: 5,
+                    }}
+                >
+                <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="key" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" name="Uploads per day"dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
+                </LineChart>
+                <PieChart width={400} height={400}>
+                    <Pie data={platformUsers} name="" dataKey="value" cx={200} cy={200} outerRadius={60} fill="#8884d8" />
+                    <Tooltip />
+                </PieChart>
+                <PieChart width={400} height={400}>
+                    <Pie data={uploadByCategory} dataKey="value" cx={200} cy={200} outerRadius={60} fill="#8884d8" label/>
+                    <Tooltip />
+                </PieChart>
+            </div>
+}
         </div>
     )
 }
