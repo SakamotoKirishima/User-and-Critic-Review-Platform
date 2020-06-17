@@ -4,11 +4,14 @@ import {Link} from 'react-router-dom'
 import "./Header.css"
 
 const Header = (props)=>{
+
+
+
     const renderContent =()=>{
-        // console.log(props.user)
+        console.log(props.user)
         switch(props.user){
             case null:
-                return <li><a className="amazingNav" href="/">Loading</a></li>
+                return <li ><a className="amazingNav" href="/">Loading</a></li>
             case false:
                 return <li><a className="amazingNav" href="/auth/google">Signup</a></li>
             default:
@@ -23,7 +26,7 @@ const Header = (props)=>{
                             </React.Fragment>
                         )
                     return <React.Fragment>
-                            <li><Link className="amazingNav" to="/profileAdmin">Porfile</Link></li>
+                            <li><Link className="amazingNav" to="/profileAdmin">Profile</Link></li>
                             <li><a className="amazingNav" href="/api/logout/">Logout</a></li>
                         </React.Fragment>
                     }
@@ -32,8 +35,8 @@ const Header = (props)=>{
     
     return(
         <nav>
-        <div className="nav-wrapper">
-            <Link to={props.user?'/profile':'/'} className="brand-logo">Critle</Link>
+        <div className="nav-wrapper white">
+            <Link to={props.user?'/profile':'/'} className="brand-logo" id="critleBrandNavbar">Critle</Link>
             <ul id="nav-mobile" className="right ">
                 {renderContent()}
             </ul>
