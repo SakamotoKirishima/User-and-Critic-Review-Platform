@@ -45,9 +45,7 @@ const Profile = (props)=>{
         {
             async function fetchArtworks(){
                 const res = await Axios.get(`/api/artwork/byuser/${props.user.displayName}`);
-                // const json = await res.json();
                 updateUserArtworks(res.data);
-                console.log(res.data);
             }
             fetchArtworks()
         }
@@ -59,30 +57,14 @@ const Profile = (props)=>{
         {
             async function fetchReviews(){
                 const res = await Axios.get(`api/rating/getrating/${props.user.displayName}`);
-                // const json = await res.json();
                 updateUserReviews(res.data);
-                // console.log(res.data);
             }
             fetchReviews()
         }
     },[])
 
     const [editName,toggleEdit]= useState(0);
-
     const [curDisName,setDispName]=useState(props.user?props.user.displayName:'');
-    // function handleSubmit(event){
-    //     event.preventDefault();
-    //     Axios.put(`/api/update/${userdata.googleId}/${curDisName}`).then(response=>{
-    //         console.log(response);
-    //         if(response.data.msg==='Name Updated Successfully')
-    //         {
-    //             alert('Name Updated Successfully')
-    //             window.location.reload(true)
-    //         }
-    //     })
-    // }
-    //if(props.user)
-    //    var curDisName = props.user.displayName
 
     const userProfileMargin = {
         marginTop : "2em"
@@ -99,28 +81,37 @@ const Profile = (props)=>{
         props.history.push('/')
     return(
         <div className="WrapperMain">
-
-            {/*<h1>userid : </h1>
-            <div className="card" style={{margin:"10%",padding:"10%",textAlign:"center"}}>
-                <h2>{userdata.name}</h2>
-                <img className="circle" src={userdata.picture}></img>
-                <h2>{userdata.displayName}</h2>
-                <form onSubmit={(e)=>{e.preventDefault();props.updateUserDetails(curDisName);}}>
-                <img src='/userimages/Witcher.jpg' style={{width:'100px',height:'100px',backgroundColor:'red'}} alt="loaddddd"/>
-                <input placeholder="Placeholder" id="first_name" type="text" className="validate" value={curDisName} onChange={e => setDispName(e.target.value)}></input>
-                </form>
-                <h2>{userdata.googleMail}</h2>
-                <h2>{userdata.dateOfJoining}</h2>
-                <h2>{userdata.genderType}</h2>
-            </div>*/}
-
             <div>   
                     <div style={topMargin}>
                         <Row className="align-items-center" style={userProfileMargin}>
                             <Col style={center}>
                                 <img id="profilePic" src={userdata.picture} />
-                                <h1 id="profileName">{userdata.displayName}<span id="fredit"><button className="critleButtonNew"  onClick={(e)=>{e.preventDefault();toggleEdit(!editName)}}>Edit</button></span></h1>
-                                {editName?<div><input style={{'width':'200px'}} onChange={e => setDispName(e.target.value)} vlaue={curDisName}></input><button className="critleButtonNew" onClick={(e)=>{e.preventDefault();props.updateUserDetails(curDisName);alert('Name updated successfully');props.history.push('/')}}>Change Name</button><button className="critleButtonNew" onClick={(e)=>{e.preventDefault();toggleEdit(!editName)}}>Cancel</button></div>:null}
+                                <h1 id="profileName">{userdata.displayName}
+                                    <span id="fredit">
+                                        <button className="critleButtonNew"  onClick={(e)=>{e.preventDefault();toggleEdit(!editName)}}>
+                                            Edit
+                                        </button>   
+                                    </span>
+                                </h1>
+                                {
+                                    editName?
+                                    <div>
+                                        <input style={{'width':'200px'}} onChange={e=>setDispName(e.target.value)} value={curDisName}/>
+                                        <button className="critleButtonNew" 
+                                            onClick={(e)=>{
+                                                    e.preventDefault();
+                                                    props.updateUserDetails(curDisName);
+                                                    alert('Name updated successfully');
+                                                    props.history.push('/')
+                                                    }}>
+                                                    Change Name
+                                        </button>
+                                        <button className="critleButtonNew" onClick={(e)=>{e.preventDefault();toggleEdit(!editName)}}>
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    :null
+                                }
                                 <h4 id="profileRealName">{userdata.name}</h4>
                                 <h4 id="profileMail">{userdata.googleMail}</h4>
                                 <Link to="/upload">
@@ -148,9 +139,7 @@ const Profile = (props)=>{
                         <div className="profileSubTitleDiv">
                             <h1 className="profileSubTitle">Recent Reviews</h1>
                         </div>
-                           
-                        <div>
-                        {console.log(userReviews.length)}
+                        <div>   
                             {
                                 userReviews.length?
                                 userReviews.map(review=>(

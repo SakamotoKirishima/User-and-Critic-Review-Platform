@@ -86,10 +86,6 @@
     width : 85%;
     height: 30em;
     margin:auto;
-    /* padding-left: 50px;
-    padding-right: 50px; */
-    /* overflow: auto; */
-    /* background: red; */
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
