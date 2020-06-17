@@ -3,15 +3,18 @@ import Axios from 'axios'
 export const handleSubmit = (newName)=>{
     return(dispatch,getState)=>{
         var userdata=getState()
-        console.log(userdata)
+        // console.log(userdata)
         Axios.put(`/api/update/${userdata.auth.googleId}/${newName}`).then(response=>{
             // console.log(response);
-            dispatch({type:'UPDATE_DISPLAY_NAME',payload:{...response.data}});
-            if(response.data.msg==='Name Updated Successfully')
+            console.log(response.data);
+            if(response.data===newName)
             {
-                alert('Name Updated Successfully')
-                //window.location.reload(true)
+                dispatch({type:'UPDATE_DISPLAY_NAME',payload:response.data});
+                alert('Name updated Successfully');
             }
+            else
+                alert(response.data)
+
         })
     }
 }

@@ -101,7 +101,6 @@ const Profile = (props)=>{
                                             onClick={(e)=>{
                                                     e.preventDefault();
                                                     props.updateUserDetails(curDisName);
-                                                    alert('Name updated successfully');
                                                     props.history.push('/')
                                                     }}>
                                                     Change Name
