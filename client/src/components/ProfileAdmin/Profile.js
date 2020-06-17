@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import {connect} from 'react-redux'
 import Axios from 'axios';
 import {handleSubmit} from '../../actions/updateUserDetails'
-import { LineChart, Line , CartesianGrid, XAxis, YAxis,Tooltip,Legend,PieChart,Pie  } from 'recharts';
+import { LineChart, Line , CartesianGrid, XAxis, YAxis,Tooltip,Legend,PieChart,Pie ,Cell } from 'recharts';
 import artworkData from './MOCK_DATA.json'
 import DataToPlot from './DataKeyVal.json'
 import Upload from "./ProfileComponents/PastUpload/PastUpload"
@@ -26,6 +26,15 @@ const platformUsers = [
     { name: 'Artworks', value: 481 }, { name: 'Books', value: 910 },
     { name: 'Movies', value: 731 }, { name: 'Songs', value: 1231 }
   ];
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+  const COLORS2 = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042',"#9F3838","#A2C082","#32BDBC","#477911","#DE14FF","#FF1432"];
+  const mostPopularTags = [
+    { name: 'Sci-fi', value: 321 }, { name: 'Horror', value: 456 },
+    { name: 'Landscape', value: 555 }, { name: 'Cyberpunk', value: 812 },
+    { name: 'Digital Art', value: 112 }, { name: 'Nostalgic', value: 461 },
+    { name: 'Motivating', value: 65 }, { name: 'Thriller', value: 33 },
+    { name: 'Funny', value: 18 }, { name: 'Creepy', value: 9 },
+  ]
 
 const Profile = (props)=>{
     var Artworks=[];
@@ -69,34 +78,9 @@ const Profile = (props)=>{
             fetchArtworks()
         }
     },[])
-    var occurences;
-    var resultDates;
+
     const [userReviews,updateUserReviews] = useState([]);
-    const handleSaveToPC = jsonData => {
-        const fileData = JSON.stringify(jsonData);
-        const blob = new Blob([fileData], {type: "text/plain"});
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.download = 'DataKeyVal.json';
-        link.href = url;
-        link.click();
-      }
     useEffect(function effectFunction(){
-        // artworkData.sort(custom_sort);
-        // occurences = artworkData.reduce(function (r, row) {
-        //     r[row.dtu] = ++r[row.dtu] || 1;
-        //     return r;
-        // }, {});
-        // resultDates = Object.keys(occurences).map(function (key) {
-        //     return { key: key, value: occurences[key] };
-        // });
-        // console.log(typeof(resultDates))
-        // handleSaveToPC(resultDates);
-        // fs.writeFile("keyValueDate.txt", resultDates, function(err) {
-        //     if (err) {
-        //         console.log(err);
-        //     }
-        // });
         if(props.user)
         {
             async function fetchReviews(){
@@ -242,11 +226,27 @@ const Profile = (props)=>{
                     <Line type="monotone" name="Uploads per day"dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
                 </LineChart>
                 <PieChart width={400} height={400}>
-                    <Pie data={platformUsers} name="" dataKey="value" cx={200} cy={200} outerRadius={60} fill="#8884d8" />
+                    <Pie data={platformUsers} name="" dataKey="value" cx={200} cy={200} outerRadius={60} fill="#8884d8" >
+                    {
+                        uploadByCategory.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+                    }
+                    </Pie>
                     <Tooltip />
                 </PieChart>
                 <PieChart width={400} height={400}>
-                    <Pie data={uploadByCategory} dataKey="value" cx={200} cy={200} outerRadius={60} fill="#8884d8" label/>
+                    <Pie data={uploadByCategory} dataKey="value" cx={200} cy={200} outerRadius={60} fill="#8884d8" label>
+                    {
+                        uploadByCategory.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+                    }
+                    </Pie>
+                    <Tooltip />
+                </PieChart>
+                <PieChart width={400} height={400}>
+                    <Pie data={mostPopularTags} dataKey="value" cx={200} cy={200} innerRadius={60} outerRadius={100} fill="#8884d8" paddingAngle={2}>
+                    {
+                        mostPopularTags.map((entry, index) => <Cell fill={COLORS2[index % COLORS2.length]}/>)
+                    }
+                    </Pie>
                     <Tooltip />
                 </PieChart>
             </div>
