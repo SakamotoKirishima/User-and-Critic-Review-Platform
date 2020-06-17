@@ -13,8 +13,8 @@
     padding: 2px;
     overflow-x: hidden;
 }
-.navMargin {
-    margin-right : 30px;
+#navMarginMe {
+    margin-left : 40px;
     margin-top : 10px;
     margin-Bottom : 10px;
 
@@ -26,7 +26,7 @@
 
 } 
 
-.navMargin:hover {
+#navMarginMe:hover {
 
     color: #4d4d4d;
 
@@ -60,7 +60,7 @@
     border : none;
 }
 
-.customCol {
+#customColMe {
     text-align: left;
     padding-left: 80px;
     padding-right: 0px;

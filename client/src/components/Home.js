@@ -46,7 +46,7 @@ const Home = ()=>{
             </div>
         </div> */}
                     <Row>
-                        <Col className='customCol'>
+                        <Col id="customColMe">
                             <div>
                                 <h1 style={customTitle}>Explore and review</h1>
                                 <h1 style={customTitle}>millions of artworks.</h1>
@@ -54,7 +54,7 @@ const Home = ()=>{
                                     
                                     <button className="critleButton" style={titleButton}>Try Critle</button>
                                 
-                                    <Nav.Link href="#About" className="navMargin" style={inline}>Learn more </Nav.Link>
+                                    <Nav.Link href="#About" id="navMarginMe" style={inline}>Learn more > </Nav.Link>
                                 </div>
                             </div>
                         </Col>

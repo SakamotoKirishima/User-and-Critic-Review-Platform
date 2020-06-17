@@ -147,11 +147,8 @@ const Profile = (props)=>{
                                 )):null
                             }
                         </div>
-                        
                     </div>
             </div>
-
-
         </div>
     )
 }

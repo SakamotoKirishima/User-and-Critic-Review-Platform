@@ -1,0 +1,26 @@
+#critleBrandNavbar {
+    font-family: Asap;
+    font-Style: normal;
+    font-Weight: 500;
+    font-Size: 35px;
+    text-align: center;
+    letter-spacing: 0.05em;
+    margin-left : 15px;
+    color : black
+}
+
+#critleBrandNavbar:hover {
+    text-decoration: none;
+    color : black;
+}
+
+.amazingNav {
+    font-family: Roboto;
+    color: black;
+}
+
+.amazingNav:hover{
+    font-family: Roboto;
+    text-decoration: none;
+    color: black;
+}
