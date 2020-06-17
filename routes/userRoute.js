@@ -80,6 +80,14 @@ module.exports = (app)=>{
             }
         })
     })
+    app.get('/api/user/all',(req,res)=>{
+        User.find({},function(err,users){
+            if(err)
+                return res.send(err)
+            else
+                return res.send(users)
+        })
+    })
     app.get('/api/user/profileimg/:name',(req,res)=>{
         const name = decodeURI(req.params.name)
         User.findOne({displayName:name},function(err,user){

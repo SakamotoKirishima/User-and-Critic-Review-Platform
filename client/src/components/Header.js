@@ -4,22 +4,31 @@ import {Link} from 'react-router-dom'
 
 const Header = (props)=>{
     const renderContent =()=>{
+        console.log(props.user)
         switch(props.user){
             case null:
                 return <li><a href="/">Loading</a></li>
             case false:
                 return <li><a href="/auth/google">Signup</a></li>
             default:
-                return (
-                    <React.Fragment>
-                        <li><Link to="/profile">Porfile</Link></li>
-                        <li><Link to="/explore">Explore</Link></li>
-                        <li><Link to="/upload">Upload</Link></li>
-                        <li><a href="/api/logout/">Logout</a></li>
-                    </React.Fragment>
-                )
+                {
+                    if(props.user.genderType=="")
+                        return (
+                            <React.Fragment>
+                                <li><Link to="/profile">Profile</Link></li>
+                                <li><Link to="/explore">Explore</Link></li>
+                                <li><Link to="/upload">Upload</Link></li>
+                                <li><a href="/api/logout/">Logout</a></li>
+                            </React.Fragment>
+                        )
+                    return <React.Fragment>
+                            <li><Link to="/profileAdmin">Porfile</Link></li>
+                            <li><a href="/api/logout/">Logout</a></li>
+                        </React.Fragment>
+                    }
+            }
         }
-    }
+    
     return(
         <nav>
         <div className="nav-wrapper">

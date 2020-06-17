@@ -44,9 +44,9 @@ const Profile = (props)=>{
         if(props.user)
         {
             async function fetchArtworks(){
-                const res = await Axios.get(`/api/artwork/byuser/${props.user.displayName}`);
+                const res = await Axios.get(`/api/artworks`);
                 // const json = await res.json();
-                updateUserArtworks(res.data);
+                updateUserArtworks(res.data.artworks);
                 console.log(res.data);
             }
             fetchArtworks()
@@ -58,12 +58,26 @@ const Profile = (props)=>{
         if(props.user)
         {
             async function fetchReviews(){
-                const res = await Axios.get(`api/rating/getrating/${props.user.displayName}`);
+                const res = await Axios.get(`api/rating/all`);
                 // const json = await res.json();
                 updateUserReviews(res.data);
                 // console.log(res.data);
             }
             fetchReviews()
+        }
+    },[])
+
+    const [users,updateUsers] = useState([]);
+    useEffect(function effectFunction(){
+        if(props.user)
+        {
+            async function fetchUsers(){
+                const res = await Axios.get(`/api/user/all`);
+                // const json = await res.json();
+                updateUsers(res.data);
+                console.log(res.data);
+            }
+            fetchUsers()
         }
     },[])
 
@@ -132,13 +146,13 @@ const Profile = (props)=>{
 
                     <div className="center">
                         <div className="profileSubTitleDiv">
-                            <h1 className="profileSubTitle">Recent Uploads</h1>
+                            <h1 className="profileSubTitle">All Uploads</h1>
                         </div>
                            
                         <div className="pastUploadDiv">
                             {   userArtworks.length?
                                 userArtworks.map(artwork=>(
-                                    <Upload key={i++} imgLink={artwork.embedded_link} artworkName={artwork.title} desc={artwork.description}/>
+                                    <Upload key={i++} postedBy={artwork.postedBy} imgLink={artwork.embedded_link} artworkName={artwork.title} desc={artwork.description}/>
                                 )):null
                             }
                         </div>
@@ -146,7 +160,7 @@ const Profile = (props)=>{
 
                     <div className="center">
                         <div className="profileSubTitleDiv">
-                            <h1 className="profileSubTitle">Recent Reviews</h1>
+                            <h1 className="profileSubTitle">All Reviews</h1>
                         </div>
                            
                         <div>
@@ -154,7 +168,7 @@ const Profile = (props)=>{
                             {
                                 userReviews.length?
                                 userReviews.map(review=>(
-                                    <Review key={i++} title={review.title} postedBy={review.postedBy} rating={review.rating} review={review.review} date={review.dtu}/>
+                                    <Review key={i++} ratedBy={review.ratedBy} title={review.title} postedBy={review.postedBy} rating={review.rating} review={review.review} date={review.dtu}/>
                                 )):null
                             }
                         </div>

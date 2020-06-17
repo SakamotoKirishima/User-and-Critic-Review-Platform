@@ -6,9 +6,12 @@ const Artwork = mongoose.model('artworks')
 module.exports=(app)=>{
 
     app.delete('/api/rating/removerating/:title/:postedby/:ratedby',(req,res)=>{
-        const title = decodeURI(req.params.title);
-        const ratedBy = decodeURI(req.params.ratedby);
-        const postedBy = decodeURI(req.params.postedby);
+        // const title = decodeURI(req.params.title);
+        // const ratedBy = decodeURI(req.params.ratedby);
+        // const postedBy = decodeURI(req.params.postedby);
+        console.log(title);
+        console.log(ratedBy);
+        console.log(postedBy);
         // var rating = Rating.findOne({title:title,ratedBy:ratedBy,postedBy:postedBy});
         // Rating.remove({_id:rating._id});
         // res.send('DELETED');
@@ -44,9 +47,17 @@ module.exports=(app)=>{
                 return res.send({ratings:ratings})    
         })
     })
-
+    app.get('/api/rating/all',(req,res)=>{
+        Rating.find({},function(err,ratings){
+            console.log(err)
+            if(err)
+                return res.send(err);
+            else
+                return res.send(ratings)
+        })
+    })
     app.get('/api/rating/getrating/:ratedby',(req,res)=>{
-        console.log('req');
+        // console.log('req');
         const ratedBy = decodeURI(req.params.ratedby);
         Rating.find({ratedBy:ratedBy},function(err,ratings){
             console.log(err)

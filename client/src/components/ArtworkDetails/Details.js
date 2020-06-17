@@ -106,7 +106,7 @@ const Details = (props) => {
                 </Row>
                 <Row>
                     <Col style={right}>
-                        <h1 className="headingRating">{(details.rating && details.ratingCount)?Math.round(100*(details.rating+1)/(2*details.ratingCount))/100:null}</h1>
+                        <h1 className="headingRating">{(details.rating && details.ratingCount)?Math.round(100*(details.rating+1)/(2*details.ratingCount))/100:'No Ratings Yet'}</h1>
                         <p className="subheadingRating" >out of 5</p>
                     </Col>
                     <Col style={center}>
@@ -159,7 +159,7 @@ const Details = (props) => {
 
                     <button className="critleButton input_img__button" onClick={(e)=>handleReviewSubmit(e)}>Post Review</button>
                     {/* <Nav.Link href="#About" className="navMargin">Cancel</Nav.Link> */}
-                    <button className="navMargin" onClick={(e)=>handleCancelClick(e)}>Cancel</button>
+                    <button className="navMargin" className="critleButton input_img__button" onClick={(e)=>handleCancelClick(e)}>Cancel</button>
                 </Col>
                 <Col></Col>
             </Row>

@@ -21,6 +21,7 @@ module.exports = (app)=>{
         });
     });
     app.get('/api/artwork/rank/:id',(req,res)=>{
+
         Artwork.find({},function(err,artworks){
             if(err){
                  return res.send(err)
@@ -165,6 +166,9 @@ module.exports = (app)=>{
         const postedBy= decodeURI(req.params.postedby);
         // console.log(title)
         // res.send('OK')
+        
+        console.log(title);
+        console.log(postedBy)
         Artwork.deleteOne({title:title,postedBy:postedBy},function(err,artwork){
             if(err){
                 return res.send(err)

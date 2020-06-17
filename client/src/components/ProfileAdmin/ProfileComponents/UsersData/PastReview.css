@@ -1,0 +1,79 @@
+#reviewDiv {
+    border-bottom: 0.2px rgba(0,0,0,0.3) solid;
+    width:80%;
+    height : auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.reviewCoverImage {
+    border-radius: 17px;
+    width : 6.7em;
+    height: 10em;
+    text-align: left;
+    margin-right: auto;
+}
+
+
+.titlE {
+    font-family: Roboto;
+font-style: normal;
+font-weight: 500;
+font-size: 25px;
+text-align: left;
+
+color: #000000;
+
+}
+
+.artisT {
+    font-family: Roboto;
+font-style: normal;
+font-weight: 300;
+font-size: 20px;
+text-align: left;
+line-height: 0;
+
+color: #000000;
+
+}
+
+.datE {
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 15px;
+text-align: center;
+
+color: rgba(0,0,0,0.8);
+}
+
+.ratinG {
+    font-weight: 300;
+    font-size: 14px;
+    text-align: left;
+    margin-top: 30px;
+}
+
+.ratingNo {
+    font-weight: 400;
+    font-size: 18px;
+    text-align: left;
+    line-height: 0.8em;
+}
+
+.reviewTitle {
+    font-weight: 300;
+    font-size: 14px;
+    text-align: center;
+    /* margin-top: 30px; */
+}
+
+.actualReview {
+    text-align: left;
+    font-weight: 400;
+    font-size: 18px;
+}
