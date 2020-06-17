@@ -54,7 +54,7 @@ const Home = ()=>{
                                     
                                     <button className="critleButton" style={titleButton}>Try Critle</button>
                                 
-                                    <Nav.Link href="#About" id="navMarginMe" style={inline}>Learn more > </Nav.Link>
+                                    <Nav.Link href="#About" id="navMarginMe" style={inline}>Learn more &gt; </Nav.Link>
                                 </div>
                             </div>
                         </Col>

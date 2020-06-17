@@ -53,7 +53,7 @@ module.exports = (app)=>{
                             Artwork.updateMany(myquery,newvalues,{upsert: false},function(err,result){
                                 if (err) throw err;
                                 // console.log(result);
-                                res.send('NAME UPDATED SUCCESSFULLY');
+                                res.send(req.params.newDispName);
                             })
                         });
                     });
