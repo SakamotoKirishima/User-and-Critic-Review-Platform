@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-
+import {withRouter} from 'react-router-dom'
 import "./Details.css"
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -60,11 +60,13 @@ const Details = (props) => {
             "title":details.title,
             "postedBy":details.postedBy,
             "ratedBy":props.match.params.displayName,
-            "rating":rating,
+            "rating":rating*2,
             "review":userReview
         }
         const res = await submitReview(body);
         handleCancelClick(null);
+        alert('Review Submitted Successfully');
+        props.history.push('/profile');
         console.log(res);
     }
     const handleCancelClick=(e)=>{
@@ -171,4 +173,4 @@ const Details = (props) => {
     );
 }
 
-export default Details;
+export default withRouter(Details);

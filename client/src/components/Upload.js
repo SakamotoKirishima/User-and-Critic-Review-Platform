@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux'
 import Axios from 'axios';
 import './Upload.css';
-import {Link} from 'react-router-dom'
+import {Link,withRouter} from 'react-router-dom'
 
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -74,6 +74,8 @@ class Upload extends Component{
             Axios.post('/api/addartwork',newArtwork,{})
             .then(res=>{
                 console.log(res);
+                alert('Artwork Uploaded Successfully');
+                this.props.history.push("/profile");
             })
         });
     }
@@ -99,15 +101,16 @@ class Upload extends Component{
     }
     titleKeyDown=(e)=>{
         const val=e.target.value;
-        if(e.key==='Enter' && val){
+        if( val){
             // console.log(val);
             this.setState({title:val});
-            // console.log(this.state.title)
+
+            console.log(this.state.title)
         }
     }
     descKeyDown=(e)=>{
         const val=e.target.value;
-        if(e.key==='Enter' && val){
+        if( val){
             // console.log(val);
             this.setState({description:val});
              console.log(this.state)
@@ -203,7 +206,7 @@ const mapStateToProps=(state)=>{
     }
 }
 
-export default connect(mapStateToProps)(Upload);
+export default withRouter(connect(mapStateToProps)(Upload));
 
 
 

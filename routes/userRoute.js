@@ -92,7 +92,9 @@ module.exports = (app)=>{
         const name = decodeURI(req.params.name)
         User.findOne({displayName:name},function(err,user){
             console.log(err)
-            const pic= user.picture;
+            var pic='https://wemapshare.com/images/users/anon.jpg';
+            if(user)
+                pic= user.picture;
             if(err)
                 return res.send(err)
             else

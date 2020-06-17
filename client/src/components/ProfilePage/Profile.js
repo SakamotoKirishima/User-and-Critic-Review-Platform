@@ -5,7 +5,7 @@ import {handleSubmit} from '../../actions/updateUserDetails'
 
 import Upload from "./ProfileComponents/PastUpload/PastUpload"
 import Review from "./ProfileComponents/PastReview/PastReview"
-import {Link} from 'react-router-dom'
+import {Link,withRouter} from 'react-router-dom'
 
 import "./Profile.css"
 import Col from 'react-bootstrap/Col'
@@ -119,8 +119,8 @@ const Profile = (props)=>{
                         <Row className="align-items-center" style={userProfileMargin}>
                             <Col style={center}>
                                 <img id="profilePic" src={userdata.picture} />
-                                <h1 id="profileName">{userdata.displayName}<span id="fredit"><button id="freditMast" onClick={(e)=>{e.preventDefault();toggleEdit(!editName)}}>Edit</button></span></h1>
-                                {editName?<div><input onChange={e => setDispName(e.target.value)} vlaue={curDisName}></input><button onClick={(e)=>{e.preventDefault();props.updateUserDetails(curDisName);}}>Change Name</button><button onClick={(e)=>{e.preventDefault();toggleEdit(!editName)}}>Cancel</button></div>:null}
+                                <h1 id="profileName">{userdata.displayName}<span id="fredit"><button className="critleButtonNew"  onClick={(e)=>{e.preventDefault();toggleEdit(!editName)}}>Edit</button></span></h1>
+                                {editName?<div><input style={{'width':'200px'}} onChange={e => setDispName(e.target.value)} vlaue={curDisName}></input><button className="critleButtonNew" onClick={(e)=>{e.preventDefault();props.updateUserDetails(curDisName);alert('Name updated successfully');props.history.push('/')}}>Change Name</button><button className="critleButtonNew" onClick={(e)=>{e.preventDefault();toggleEdit(!editName)}}>Cancel</button></div>:null}
                                 <h4 id="profileRealName">{userdata.name}</h4>
                                 <h4 id="profileMail">{userdata.googleMail}</h4>
                                 <Link to="/upload">
@@ -178,4 +178,4 @@ const mapDispatchToProps=(dispatch)=>{
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Profile);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Profile));
