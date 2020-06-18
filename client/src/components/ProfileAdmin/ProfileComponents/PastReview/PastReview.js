@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import "./PastReview.css"
+import moment from 'moment'
 
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -40,14 +41,14 @@ const Review = (props) => {
         <div id="reviewDiv">
             <Row>
                 <Col xs={1}>
-                <img className="reviewCoverImage" src={imgSrc}/>
+                <img id="reviewCoverImage" src={imgSrc}/>
                 </Col>
                 <Col >
                     <div style={leftMar}>
-                        <h1 className="titlE" >{props.title}</h1>
-                        <h1 className="artisT" >{props.postedBy}</h1>
-                        <h4 className="ratinG">Rating</h4>
-                        <h4 className="ratingNo">{props.rating}</h4>
+                        <h1 id="titlE" >{props.title}</h1>
+                        <h1 id="artisT" >{props.postedBy}</h1>
+                        <h4 id="ratinG">Rating</h4>
+                        <h4 id="ratingNo">{props.rating}</h4>
 
                     </div>
                     
@@ -55,16 +56,16 @@ const Review = (props) => {
                 </Col>
                 <Col xs={6}></Col>
                 <Col xs={2}>
-                    <h6 className="datE">23 March, 2020</h6>
+                    <h6 id="datE">{moment(props.date).format("ddd, MMM Do YYYY, h:mm:ss a")}</h6>
                 </Col>
             </Row>
             
             <Row>
             <Col xs={1}></Col>
                 <Col>
-                <p className="reviewTitle">Review</p>
-                <p className="actualReview">{props.review}</p>
-                <button onClick={(e)=>handleClick(e)}>X</button>
+                <p id="reviewTitle">Review by {props.ratedBy}</p>
+                <p id="actualReview">{props.review}</p>
+                <button className="critleButtonNewToo" onClick={(e)=>handleClick(e)}>X</button>
                 </Col>
             <Col xs={1}></Col>
             

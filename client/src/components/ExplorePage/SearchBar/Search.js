@@ -6,48 +6,29 @@ import "./search.css"
 import Artwork from '../ArtworkCard/Artwork'
 const Searchbar = () => {
 
-    
     let artworkArray = ["Starry Nights","Sunflower","Peace","The Girl With a Pearl Earring"];
     const [searchField,setField]=useState("");
-    // var [search,updateSearch]=useState(0);
+    const [searchResField,setSearchResField]=useState("");
     var [artworks,searchArtworks]=useState([]);
     var i=0;
 
     async function searchArt(){
         const res = await Axios.get(`/api/artwork/byname/${searchField}`);
-        console.log(res.data);
         searchArtworks(res.data);
+        setSearchResField(searchField)
+        if(!res.data.length)
+            alert("No artwork found")
         return;
     }
-
-    // useEffect(function effectFunction(){
-        
-    //     if(!search%2)
-    //     {
-    //         searchArt();
-    //     }
-    // },[search])
-    
-
-    // useEffect(function effectFunction(){
-    //     console.log(search)
-    // },[search])
     const InputKeyDown=(e)=>{
-        // console.log('dwaad')
         const val = e.target.value;
         if(e.key==='Enter' && val){
-            console.log('pres');
-            // updateSearch(search + 1);
             searchArt();
-
-            // searchArtworks(res);
         }
     }
     const handleClick = (e)=>{
         e.preventDefault();
-        console.log('clik')
-        // updateSearch(search += 1);
-        
+        searchArt();
     }
     
     const RenderSearch = ()=>{
@@ -83,7 +64,7 @@ const Searchbar = () => {
         <div id="searchResultsDiv">
             {RenderSearch()}
             {!artworks.length?null:<div id="resultsTitleDiv">
-                    <h1 id="searchresultsTitle">Search Results for '{searchField}'</h1>
+                    <h1 id="searchresultsTitle">Search Results for '{searchResField}'</h1>
             </div>
             }
             {

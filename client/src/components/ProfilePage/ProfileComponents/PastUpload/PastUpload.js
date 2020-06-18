@@ -1,10 +1,22 @@
 import React from 'react'
 import "./PastUpload.css"
 import {connect} from 'react-redux'
+import Axios from 'axios'
+import {Link} from 'react-router-dom'
+
 
 const upload = (props) => {
+    const handleClick=  async (e)=>{
+        e.preventDefault();
+        // console.log(props.user.displayName)
+        const res = await Axios.delete(`/api/deleteartwork/${encodeURI(props.artworkName)}/${encodeURI(props.user.displayName)}`);
+        console.log(res);
+        props.callBack(e);
+        // props.history.push('/profileAdmin');
+    }
     return (
             <div id="pastUploadCard" >
+                <Link to={`/details/${props.id}/-1`} state={{title:props.title,postedBy:props.user.displayName}}>
                     {/* <img src={require('./ReviewAssets/SamplePic.jpg')} className="coverImage" />
                     <h4 id="imageTitle">Volition</h4>   */}
                     {/*console.log(props.user)*/}
@@ -20,6 +32,8 @@ const upload = (props) => {
                             </div>
                         </div>
                     </div>
+                    </Link>
+                    <button className="critleButtonNewToo" onClick={(e)=>handleClick(e)}>X</button> 
             </div>
 
     );

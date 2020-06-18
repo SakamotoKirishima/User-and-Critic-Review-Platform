@@ -8,7 +8,7 @@ const Header = (props)=>{
 
 
     const renderContent =()=>{
-        console.log(props.user)
+        // console.log(props.user)
         switch(props.user){
             case null:
                 return <li ><a className="amazingNav" href="/">Loading</a></li>
@@ -26,7 +26,7 @@ const Header = (props)=>{
                             </React.Fragment>
                         )
                     return <React.Fragment>
-                            <li><Link className="amazingNav" to="/profileAdmin">Profile</Link></li>
+                            <li><Link className="amazingNav" to="/profileAdmin">Dashboard</Link></li>
                             <li><a className="amazingNav" href="/api/logout/">Logout</a></li>
                         </React.Fragment>
                     }

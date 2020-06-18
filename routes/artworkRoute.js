@@ -100,13 +100,10 @@ module.exports = (app)=>{
                }
             }).collation({locale:'en_US',strength:2})
         } 
-        // res.send('OK')
     })
 
     app.post('/api/addartwork',(req,res)=>{
-        // console.log(req.body)
         Artwork.find({title:req.body.title,postedBy:req.body.postedBy},function(err,artworks){
-            //console.log(artworks.length)
             if(err){
                  return res.send(err)
             }
@@ -114,8 +111,6 @@ module.exports = (app)=>{
                 return res.send('UPLOADED SAME ARTWORK BEFORE');
             }
             else {
-                // console.log(req.body.tags)
-                // res.send('OK')
                 new Artwork({
                         title:req.body.title,
                         embedded_link:req.body.embedded_link,
@@ -130,22 +125,6 @@ module.exports = (app)=>{
                     })
             }
         });
-        //if(Artwork.find({title:req.body.title,postedBy:req.body.postedBy}).count()==0){
-            // new Artwork({
-            //     title:req.body.title,
-            //     embedded_link:req.body.embedded_link,
-            //     postedBy:req.body.postedBy,
-            //     description:req.body.description,
-            //     dtu:Date.now()
-            // }).save().then((artwork)=>{
-            //     res.send("SUCCESS")
-            // })
-            
-        //}
-        //else
-        //{
-         //   res.send('')
-        //}
     });
 
     app.get('/api/artwork/artworkimg/:title/:postedBy',(req,res)=>{

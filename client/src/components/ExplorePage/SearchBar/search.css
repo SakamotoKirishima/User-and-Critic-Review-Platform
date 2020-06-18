@@ -63,11 +63,9 @@ color: #443EA5;
     box-sizing: border-box;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
-
-#searchBar:focus + #searchButton {
+#searchBar:focus  {
     visibility: visible;
     transition: 0.3s;
-
 }
 #searchResultsDiv {
 
@@ -100,7 +98,7 @@ color: #443EA5;
 }
 #searchButton {
     
-    visibility: hidden;
+    visibility: visible;
     margin-left: 10px;   
     border-radius: 50px;
     background-color: black;

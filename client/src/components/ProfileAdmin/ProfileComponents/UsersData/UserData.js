@@ -28,7 +28,7 @@ const upload =(props) => {
                             
                         </div>
                     </div>
-                    <button onClick={(e)=>handleClick(e)}>X</button>
+                    <button className="critleButtonNewToo" onClick={(e)=>handleClick(e)}>X</button>
             </div>
 
     );

@@ -25,7 +25,7 @@ class Upload extends Component{
         const fd= new FormData();
         fd.append('file',this.state.selectedFile);
         Axios.post('/api/upload',fd,{
-            //// receive two    parameter endpoint url ,form data
+            //// receive two parameter endpoint url ,form data
         })
         .then(res=>{
             const embedded_link=res.data;
@@ -65,7 +65,7 @@ class Upload extends Component{
     }
     titleKeyDown=(e)=>{
         const val=e.target.value;
-        if( val){
+        if(val){
             this.setState({title:val});
 
             console.log(this.state.title)
@@ -73,7 +73,7 @@ class Upload extends Component{
     }
     descKeyDown=(e)=>{
         const val=e.target.value;
-        if( val){
+        if(val){
             this.setState({description:val});
              console.log(this.state)
         }
@@ -106,12 +106,12 @@ class Upload extends Component{
 
 
                     <div className="input-field col s6 center customMarginX">
-                        <input id="title" type="text" onKeyDown={this.titleKeyDown} className="validate" />
+                        <input id="title" value={this.state.title} type="text" onChange={this.titleKeyDown} className="validate" />
                         <label htmlFor="title" >Title</label>
                     </div>
 
                     <div className="input-field col s12 customMarginX">
-                        <textarea id="textarea2" className="materialize-textarea" onKeyDown={this.descKeyDown}></textarea>
+                        <textarea id="textarea2" value={this.state.description} className="materialize-textarea" onChange={this.descKeyDown}></textarea>
                         <label htmlFor="textarea2">Short Description</label>
                     </div>
 

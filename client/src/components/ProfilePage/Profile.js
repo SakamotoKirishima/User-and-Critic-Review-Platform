@@ -2,7 +2,6 @@ import React,{useState,useEffect} from 'react';
 import {connect} from 'react-redux'
 import Axios from 'axios';
 import {handleSubmit} from '../../actions/updateUserDetails'
-
 import Upload from "./ProfileComponents/PastUpload/PastUpload"
 import Review from "./ProfileComponents/PastReview/PastReview"
 import {Link,withRouter} from 'react-router-dom'
@@ -43,6 +42,8 @@ const Profile = (props)=>{
     useEffect(function effectFunction(){
         if(props.user)
         {
+            if(props.user.displayName=="")
+                alert('Please set your Display Name');
             async function fetchArtworks(){
                 const res = await Axios.get(`/api/artwork/byuser/${props.user.displayName}`);
                 updateUserArtworks(res.data);
@@ -128,7 +129,7 @@ const Profile = (props)=>{
                         <div className="pastUploadDiv">
                             {   userArtworks.length?
                                 userArtworks.map(artwork=>(
-                                    <Upload key={i++} imgLink={artwork.embedded_link} artworkName={artwork.title} desc={artwork.description}/>
+                                    <Upload id={artwork._id} callBack={(e)=>{e.preventDefault();alert('Deleted Successfully');props.history.push("/")}} key={i++} imgLink={artwork.embedded_link} artworkName={artwork.title} desc={artwork.description}/>
                                 )):null
                             }
                         </div>
@@ -142,7 +143,7 @@ const Profile = (props)=>{
                             {
                                 userReviews.length?
                                 userReviews.map(review=>(
-                                    <Review key={i++} title={review.title} postedBy={review.postedBy} rating={review.rating} review={review.review} date={review.dtu}/>
+                                    <Review callBack={(e)=>{e.preventDefault();alert('Deleted Successfully');props.history.push("/")}} key={i++} date={review.dtu} title={review.title} postedBy={review.postedBy} rating={review.rating} review={review.review} date={review.dtu}/>
                                 )):null
                             }
                         </div>

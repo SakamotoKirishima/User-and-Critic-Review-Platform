@@ -5,7 +5,6 @@ const Artwork = mongoose.model('artworks')
 
 module.exports = (app)=>{
 
-//add if(req.user) to all
 
     app.put('/api/update/:id/:newDispName',(req,res)=>{
         User.findOne({displayName:req.params.newDispName})
@@ -18,11 +17,7 @@ module.exports = (app)=>{
                 .then((existingUser)=>{
                     if(existingUser)
                     {
-                        // console.log(req.params.id)
                         prevName = existingUser.displayName;
-                        // console.log(existingUser.displayName)
-                        // console.log(prevName+" dwadadwada");
-                        //console.log(existingUser)
                         existingUser.update(
                             {displayName:req.params.newDispName},
                             req.body,
@@ -34,25 +29,15 @@ module.exports = (app)=>{
                             );
                     }
                     var myquery = { postedBy: prevName };
-                    // console.log(prevName)
                     var newvalues = {$set: {postedBy: req.params.newDispName} };
                     var myquery2 = { ratedBy: prevName };
                     var newvalues2 = {$set: {ratedBy: req.params.newDispName} };
-                    // Rating.find({ratedBy:"Radiant"},(err,ratings)=>{
-                    //     if (err) throw err;
-                    //     ratings.map(rating=>{
-                    //         console.log(rating)
-                    //     })
-                    // })
                     Rating.updateMany(myquery,newvalues,{upsert: false},function(err,result){
                     if (err) throw err;
-                    // console.log(result);
                         Rating.updateMany(myquery2,newvalues2,{upsert: false},function(err,result){
                             if (err) throw err;
-                            // console.log(result);
                             Artwork.updateMany(myquery,newvalues,{upsert: false},function(err,result){
                                 if (err) throw err;
-                                // console.log(result);
                                 res.send(req.params.newDispName);
                             })
                         });

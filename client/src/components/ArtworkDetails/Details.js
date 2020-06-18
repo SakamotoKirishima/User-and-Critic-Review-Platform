@@ -4,6 +4,7 @@ import "./Details.css"
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Axios from 'axios'
+import {connect} from 'react-redux'
 import Review from "./ReviewComp/UserReview"
 import Nav from 'react-bootstrap/Nav'
 // import Axios from 'axios'
@@ -90,7 +91,8 @@ const Details = (props) => {
                         
                         <h3 id="artArtist">{details.postedBy}</h3>
                         <p id="artDescription">{details.description}</p>
-                        <button id="reviewButton" onClick={(e)=>{e.preventDefault();toggleClick(1)}}>Review</button>
+                        {/* {console.log(props.match.params.displayName)} */}
+                        {((!(props.match.params.displayName=='-1')))?<button id="reviewButton" onClick={(e)=>{e.preventDefault();toggleClick(1)}}>Review</button>:null}
 
                     </Col>
                     <Col xs={1}>
@@ -172,5 +174,9 @@ const Details = (props) => {
             </div>
     );
 }
-
-export default withRouter(Details);
+const mapStateToProps = (state) => {
+    return {
+        user:state.auth
+    }
+}
+export default withRouter(connect(mapStateToProps)(Details));

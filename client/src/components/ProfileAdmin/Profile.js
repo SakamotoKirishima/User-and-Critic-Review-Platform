@@ -12,6 +12,7 @@ import {Link} from 'react-router-dom'
 import { Redirect } from "react-router";
 import { withRouter } from 'react-router-dom';
 import moment from 'moment'
+
 import "./Profile.css"
 import fs from 'fs';
 
@@ -109,19 +110,6 @@ const Profile = (props)=>{
 
     const [editName,toggleEdit]= useState(0);
 
-    const [curDisName,setDispName]=useState(props.user?props.user.displayName:'');
-    // function handleSubmit(event){
-    //     event.preventDefault();
-    //     Axios.put(`/api/update/${userdata.googleId}/${curDisName}`).then(response=>{
-    //         console.log(response);
-    //         if(response.data.msg==='Name Updated Successfully')
-    //         {
-    //             alert('Name Updated Successfully')
-    //             window.location.reload(true)
-    //         }
-    //     })
-    // }
-    //if(props.user)
     const userProfileMargin = {
         marginTop : "2em"
     }
@@ -147,10 +135,10 @@ const Profile = (props)=>{
     return(
         <div className="WrapperMain">
             {editName?
-                <div>
-            <button onClick={(e)=>{e.preventDefault();toggleEdit(0)}}></button>
-
-            <div>   
+                <div className="wrapperDasher">
+                    <div className="buttonWrap"> 
+                        <button className="align-items-center critleButtonNew" onClick={(e)=>{e.preventDefault();toggleEdit(0)}}>Dashboard</button>
+                    </div><div>   
                     <div style={topMargin}>
                         <Row className="align-items-center" style={userProfileMargin}>
                             <Col style={center}>
@@ -167,10 +155,10 @@ const Profile = (props)=>{
                             <h1 className="profileSubTitle">All Uploads</h1>
                         </div>
                            
-                        <div className="pastUploadDiv">
+                        <div className="pastUploadDivAdmin">
                             {   userArtworks.length?
                                 userArtworks.map(artwork=>(
-                                    <Upload key={i++} callBack={(e)=>{e.preventDefault();alert('Deleted Successfully');props.history.push("/")}} postedBy={artwork.postedBy} imgLink={artwork.embedded_link} artworkName={artwork.title} desc={artwork.description}/>
+                                    <Upload id={artwork._id} key={i++} callBack={(e)=>{e.preventDefault();alert('Deleted Successfully');props.history.push("/")}} postedBy={artwork.postedBy} imgLink={artwork.embedded_link} artworkName={artwork.title} desc={artwork.description}/>
                                 )):null
                             }
                         </div>
@@ -186,7 +174,7 @@ const Profile = (props)=>{
                             {
                                 userReviews.length?
                                 userReviews.map(review=>(
-                                    <Review key={i++} ratedBy={review.ratedBy} callBack={(e)=>{e.preventDefault();alert('Deleted Successfully');props.history.push("/")}} title={review.title} postedBy={review.postedBy} rating={review.rating} review={review.review} date={review.dtu}/>
+                                    <Review date={review.dtu} key={i++} ratedBy={review.ratedBy} callBack={(e)=>{e.preventDefault();alert('Deleted Successfully');props.history.push("/")}} title={review.title} postedBy={review.postedBy} rating={review.rating} review={review.review} date={review.dtu}/>
                                 )):null
                             }
                         </div>
@@ -208,47 +196,80 @@ const Profile = (props)=>{
             </div>
             </div>
             :
-            <div>
-                <button onClick={(e)=>{e.preventDefault();toggleEdit(1)}}></button>
-                <LineChart
-                    width={1500}
-                    height={900}
-                    data={DataToPlot}
-                    margin={{
-                    top: 5, right: 30, left: 20, bottom: 5,
-                    }}
-                >
-                <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="key" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" name="Uploads per day"dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
-                </LineChart>
-                <PieChart width={400} height={400}>
-                    <Pie data={platformUsers} name="" dataKey="value" cx={200} cy={200} outerRadius={60} fill="#8884d8" >
-                    {
-                        uploadByCategory.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
-                    }
-                    </Pie>
-                    <Tooltip />
-                </PieChart>
-                <PieChart width={400} height={400}>
-                    <Pie data={uploadByCategory} dataKey="value" cx={200} cy={200} outerRadius={60} fill="#8884d8" label>
-                    {
-                        uploadByCategory.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
-                    }
-                    </Pie>
-                    <Tooltip />
-                </PieChart>
-                <PieChart width={400} height={400}>
-                    <Pie data={mostPopularTags} dataKey="value" cx={200} cy={200} innerRadius={60} outerRadius={100} fill="#8884d8" paddingAngle={2}>
-                    {
-                        mostPopularTags.map((entry, index) => <Cell fill={COLORS2[index % COLORS2.length]}/>)
-                    }
-                    </Pie>
-                    <Tooltip />
-                </PieChart>
+            <div className="wrapperDash">
+                <button className="align-items-center critleButtonNew" onClick={(e)=>{e.preventDefault();toggleEdit(1)}} style={{'marginTop':'3%'}}>Manage</button>
+                <Row className="align-items-center" style={{'marginTop':'3%','padding':'20px'}}>
+                    <Col style={{'width':'150px','height':'150px','verticalAlign':'center','fontWeight':'bold','textAlign':'center','border':'2px solid','margin':'1%'}}>
+                        <p style={{'fontSize':"40px"}}>{userArtworks.length}</p><p>Artworks</p>
+                    </Col>
+
+                    <Col style={{'width':'150px','height':'150px','verticalAlign':'center','fontWeight':'bold','textAlign':'center','border':'2px solid','margin':'1%'}}>
+                        <p style={{'fontSize':"40px"}}>{users.length}</p><p>Users</p>
+                    </Col>
+
+                    <Col style={{'width':'150px','height':'150px','verticalAlign':'center','fontWeight':'bold','textAlign':'center','border':'2px solid','margin':'1%'}}>
+                        <p style={{'fontSize':"40px"}}>{userReviews.length}</p><p>Reviews</p>
+                    </Col>
+
+                </Row>
+                <Row className="align-items-center">
+                    <Col style={{'textAlign':'center'}}>
+                        <h1 style={{'backgroundColor':"white",'fontWeight':'bold'}}>Uploads Per Day</h1>
+                        <LineChart
+                            width={1500}
+                            height={600}
+                            data={DataToPlot}
+                            margin={{
+                            top: 5, right: 30, left: 20, bottom: 5,
+                            }}
+                        >
+                        
+                        <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="key" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Line type="monotone" name="Uploads per day"dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
+                        </LineChart>
+                    </Col>
+                </Row>
+                <Row className="align-items-center row1">
+                    <Col style={{'textAlign':'center'}}>
+                        <h1 style={{'backgroundColor':"white",'fontWeight':'bold'}}>Users By Platform</h1>
+                        <PieChart width={400} height={130}>
+                            <Pie data={platformUsers} name="" dataKey="value" cx={200} cy={65} outerRadius={60} fill="#8884d8" >
+                            {
+                                platformUsers.map((entry, index) => <Cell key={i++} fill={COLORS[index % COLORS.length]}/>)
+                            }
+                            </Pie>
+                            <Tooltip />
+                        </PieChart>
+                    </Col>
+                    <Col style={{'textAlign':'center'}}>
+                        <h1 style={{'backgroundColor':"white",'fontWeight':'bold'}}>Uploads Per Category</h1>
+                        <PieChart width={400} height={130}>
+                            <Pie data={uploadByCategory} dataKey="value" cx={200} cy={65} outerRadius={60} fill="#8884d8">
+                            {
+                                uploadByCategory.map((entry, index) => <Cell key={i++} fill={COLORS[index % COLORS.length]}/>)
+                            }
+                            </Pie>
+                            <Tooltip />
+                        </PieChart>
+                    </Col>
+                </Row>
+                <Row className="align-items-center">
+                    <h1 style={{'backgroundColor':"white",'fontWeight':'bold'}}>Top 10 Tags</h1>
+                    <Col style={{'textAlign':'center'}}>
+                        <PieChart width={400} height={400}>
+                            <Pie data={mostPopularTags} dataKey="value" cx={200} cy={200} innerRadius={60} outerRadius={100} fill="#8884d8" paddingAngle={2}>
+                            {
+                                mostPopularTags.map((entry, index) => <Cell key={i++} fill={COLORS2[index % COLORS2.length]}/>)
+                            }
+                            </Pie>
+                            <Tooltip />
+                        </PieChart>
+                    </Col>
+                </Row>
             </div>
 }
         </div>
