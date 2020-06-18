@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import "./UserReview.css"
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import moment from 'moment'
 import Axios from 'axios'
 
 const Userreview = (props) => {
@@ -42,7 +43,7 @@ const Userreview = (props) => {
                 </Col>
                 <Col xs={2}>
                 <h6 id="reviewUser">{reviewDetails.ratedBy}</h6>
-                <h6 id="reviewDate">{reviewDetails.dtu}</h6>
+                <h6 id="reviewDate">{moment(props.date).format("ddd, MMM Do YYYY, h:mm:ss a")}</h6>
                 <h6 ><span id="reviewRated">Rated</span>{(reviewDetails.rating/2)}/5</h6>
                 </Col>
 
