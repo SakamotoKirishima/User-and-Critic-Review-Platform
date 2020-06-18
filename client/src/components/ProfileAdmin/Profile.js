@@ -139,6 +139,10 @@ const Profile = (props)=>{
         props.history.push('/')
     return(
         <div className="WrapperMain">
+            <div id="titleDashDiv">
+                            <h1 id="welcomeTo">Welcome to</h1>
+                            <h1 id="adminDash">Admin Dashboard</h1>
+                    </div>
             {editName?
                 <div className="wrapperDasher">
                     <div className="buttonWrap"> 
@@ -202,7 +206,15 @@ const Profile = (props)=>{
             </div>
             :
             <div className="wrapperDash">
-                <button className="align-items-center critleButtonNew" onClick={(e)=>{e.preventDefault();toggleEdit(1)}} style={{'marginTop':'3%'}}>Manage</button>
+            
+                    
+                <button className="align-items-center critleButtonNew" onClick={(e)=>{e.preventDefault();toggleEdit(1)}} style={{'marginTop':'2%'}}>Manage</button>
+                <div className="dashboardStatsDiv">
+
+                    <div className="profileSubTitleDiv">
+                        <h1 className="profileSubTitle">CRITLE STATISTICS</h1>
+                    
+                    </div>
                 <Row className="align-items-center row" style={{'marginTop':'3%','padding':'20px'}}>
                     <Col style={{'width':'250px','height':'150px','verticalAlign':'center','textAlign':'center','border':'2px solid','margin':'1%'}}>
                         <p style={{'fontSize':"40px"}}>{userArtworks.length}<br />Artworks</p>
@@ -217,9 +229,16 @@ const Profile = (props)=>{
                     </Col>
 
                 </Row>
+                </div>
+                <div className="dashboardStatsDiv">
+
+                    <div className="profileSubTitleDiv">
+                        <h1 className="profileSubTitle">USAGE STATISTICS</h1>
+                    
+                    </div>
                 <Row className="align-items-center row" >
-                    <Col style={{'textAlign':'center'}}>
-                        <h1 style={{'backgroundColor':"white"}}>Uploads Per Day</h1>
+                        <Col style={{'textAlign':'center'}}>
+                                            
                         <LineChart
                             width={1500}
                             height={600}
@@ -239,9 +258,13 @@ const Profile = (props)=>{
                         </LineChart>
                     </Col>
                 </Row>
+                </div>
+                
                 <Row className="align-items-center row1" style={{'width':'auto','columnGap':"5%"}}>
                     <Col style={{'textAlign':'center','borderbottom':'2px solid grey','padding':"1%"}}>
-                        <h1 style={{'backgroundColor':"white"}}>Users By Platform</h1>
+                        <div id="titleDashDiv">
+                            <h1 id="welcomeTo">Users By Platform</h1>
+                        </div>
                         <PieChart width={400} height={130}>
                             <Pie data={platformUsers}  dataKey="value" cx={200} cy={65} outerRadius={60} fill="#8884d8" >
                             {
@@ -252,7 +275,9 @@ const Profile = (props)=>{
                         </PieChart>
                     </Col>
                     <Col style={{'textAlign':'center'}}>
-                        <h1 style={{'backgroundColor':"white"}}>Uploads Per Category</h1>
+                    <div id="titleDashDiv">
+                            <h1 id="welcomeTo">Uploads Per Category</h1>
+                        </div>
                         <PieChart width={400} height={130}>
                             <Pie data={uploadByCategory} dataKey="value" cx={200} cy={65} outerRadius={60} fill="#8884d8" >
                             {
@@ -263,11 +288,13 @@ const Profile = (props)=>{
                         </PieChart>
                     </Col>
                 </Row>
-                <Row className="align-items-center row">
-                <h1 style={{'backgroundColor':"white"}}>Top 10 Tags</h1>
-                    <Col >
-                        <PieChart width={400} height={400}>
-                            <Pie data={mostPopularTags} dataKey="value" cx={200} cy={200} innerRadius={60} outerRadius={100} fill="#8884d8" paddingAngle={2}>
+                <Row className="align-items-center rowLast">
+                    <Col style={{'textAlign':'center'}}>
+                    <div id="titleDashDiv">
+                            <h1 id="welcomeTo">Top 10 Tags</h1>
+                        </div>
+                        <PieChart width={400} height={300}>
+                            <Pie data={mostPopularTags} dataKey="value" cx={200} cy={100} innerRadius={60} outerRadius={100} fill="#8884d8" paddingAngle={2}>
                             {
                                 mostPopularTags.map((entry, index) => <Cell key={i++} fill={COLORS2[index % COLORS2.length]}/>)
                             }
@@ -277,8 +304,9 @@ const Profile = (props)=>{
                         
                     </Col>
                 </Row>
+                
             </div>
-}
+            }
         </div>
     )
 }
