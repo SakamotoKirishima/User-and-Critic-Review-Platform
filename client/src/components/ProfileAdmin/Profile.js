@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import {connect} from 'react-redux'
 import Axios from 'axios';
 import {handleSubmit} from '../../actions/updateUserDetails'
-import { LineChart, Line , CartesianGrid, XAxis, YAxis,Tooltip,Legend,PieChart,Pie ,Cell } from 'recharts';
+import { LineChart, Line , CartesianGrid, XAxis, YAxis,Tooltip,Legend,PieChart,Pie ,Cell,Brush } from 'recharts';
 import artworkData from './MOCK_DATA.json'
 import DataToPlot from './DataKeyVal.json'
 import Upload from "./ProfileComponents/PastUpload/PastUpload"
@@ -74,7 +74,7 @@ const Profile = (props)=>{
                 const res = await Axios.get(`/api/artworks`);
                 // const json = await res.json();
                 updateUserArtworks(res.data.artworks);
-                console.log(res.data);
+                // console.log(res.data);
             }
             fetchArtworks()
         }
@@ -94,6 +94,11 @@ const Profile = (props)=>{
         }
     },[])
 
+    let renderLabel = function(entry) {
+        console.log(entry.name)
+        return entry.name;
+    }
+
     const [users,updateUsers] = useState([]);
     useEffect(function effectFunction(){
         if(props.user)
@@ -102,7 +107,7 @@ const Profile = (props)=>{
                 const res = await Axios.get(`/api/user/all`);
                 // const json = await res.json();
                 updateUsers(res.data);
-                console.log(res.data);
+                // console.log(res.data);
             }
             fetchUsers()
         }
@@ -198,29 +203,29 @@ const Profile = (props)=>{
             :
             <div className="wrapperDash">
                 <button className="align-items-center critleButtonNew" onClick={(e)=>{e.preventDefault();toggleEdit(1)}} style={{'marginTop':'3%'}}>Manage</button>
-                <Row className="align-items-center" style={{'marginTop':'3%','padding':'20px'}}>
-                    <Col style={{'width':'150px','height':'150px','verticalAlign':'center','fontWeight':'bold','textAlign':'center','border':'2px solid','margin':'1%'}}>
-                        <p style={{'fontSize':"40px"}}>{userArtworks.length}</p><p>Artworks</p>
+                <Row className="align-items-center row" style={{'marginTop':'3%','padding':'20px'}}>
+                    <Col style={{'width':'250px','height':'150px','verticalAlign':'center','textAlign':'center','border':'2px solid','margin':'1%'}}>
+                        <p style={{'fontSize':"40px"}}>{userArtworks.length}<br />Artworks</p>
                     </Col>
 
-                    <Col style={{'width':'150px','height':'150px','verticalAlign':'center','fontWeight':'bold','textAlign':'center','border':'2px solid','margin':'1%'}}>
-                        <p style={{'fontSize':"40px"}}>{users.length}</p><p>Users</p>
+                    <Col style={{'width':'250px','height':'150px','verticalAlign':'center','textAlign':'center','border':'2px solid','margin':'1%'}}>
+                        <p style={{'fontSize':"40px"}}>{users.length}<br />Users</p>
                     </Col>
 
-                    <Col style={{'width':'150px','height':'150px','verticalAlign':'center','fontWeight':'bold','textAlign':'center','border':'2px solid','margin':'1%'}}>
-                        <p style={{'fontSize':"40px"}}>{userReviews.length}</p><p>Reviews</p>
+                    <Col style={{'width':'250px','height':'150px','verticalAlign':'center','textAlign':'center','border':'2px solid','margin':'1%'}}>
+                        <p style={{'fontSize':"40px"}}>{userReviews.length}<br />Reviews</p>
                     </Col>
 
                 </Row>
-                <Row className="align-items-center">
+                <Row className="align-items-center row" >
                     <Col style={{'textAlign':'center'}}>
-                        <h1 style={{'backgroundColor':"white",'fontWeight':'bold'}}>Uploads Per Day</h1>
+                        <h1 style={{'backgroundColor':"white"}}>Uploads Per Day</h1>
                         <LineChart
                             width={1500}
                             height={600}
                             data={DataToPlot}
                             margin={{
-                            top: 5, right: 30, left: 20, bottom: 5,
+                            top: 20, right: 30, left: 20, bottom: 5,
                             }}
                         >
                         
@@ -229,15 +234,16 @@ const Profile = (props)=>{
                             <YAxis />
                             <Tooltip />
                             <Legend />
+                            <Brush />
                             <Line type="monotone" name="Uploads per day"dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
                         </LineChart>
                     </Col>
                 </Row>
-                <Row className="align-items-center row1">
-                    <Col style={{'textAlign':'center'}}>
-                        <h1 style={{'backgroundColor':"white",'fontWeight':'bold'}}>Users By Platform</h1>
+                <Row className="align-items-center row1" style={{'width':'auto','columnGap':"5%"}}>
+                    <Col style={{'textAlign':'center','borderbottom':'2px solid grey','padding':"1%"}}>
+                        <h1 style={{'backgroundColor':"white"}}>Users By Platform</h1>
                         <PieChart width={400} height={130}>
-                            <Pie data={platformUsers} name="" dataKey="value" cx={200} cy={65} outerRadius={60} fill="#8884d8" >
+                            <Pie data={platformUsers}  dataKey="value" cx={200} cy={65} outerRadius={60} fill="#8884d8" >
                             {
                                 platformUsers.map((entry, index) => <Cell key={i++} fill={COLORS[index % COLORS.length]}/>)
                             }
@@ -246,9 +252,9 @@ const Profile = (props)=>{
                         </PieChart>
                     </Col>
                     <Col style={{'textAlign':'center'}}>
-                        <h1 style={{'backgroundColor':"white",'fontWeight':'bold'}}>Uploads Per Category</h1>
+                        <h1 style={{'backgroundColor':"white"}}>Uploads Per Category</h1>
                         <PieChart width={400} height={130}>
-                            <Pie data={uploadByCategory} dataKey="value" cx={200} cy={65} outerRadius={60} fill="#8884d8">
+                            <Pie data={uploadByCategory} dataKey="value" cx={200} cy={65} outerRadius={60} fill="#8884d8" >
                             {
                                 uploadByCategory.map((entry, index) => <Cell key={i++} fill={COLORS[index % COLORS.length]}/>)
                             }
@@ -257,9 +263,9 @@ const Profile = (props)=>{
                         </PieChart>
                     </Col>
                 </Row>
-                <Row className="align-items-center">
-                    <h1 style={{'backgroundColor':"white",'fontWeight':'bold'}}>Top 10 Tags</h1>
-                    <Col style={{'textAlign':'center'}}>
+                <Row className="align-items-center row">
+                <h1 style={{'backgroundColor':"white"}}>Top 10 Tags</h1>
+                    <Col >
                         <PieChart width={400} height={400}>
                             <Pie data={mostPopularTags} dataKey="value" cx={200} cy={200} innerRadius={60} outerRadius={100} fill="#8884d8" paddingAngle={2}>
                             {
@@ -268,6 +274,7 @@ const Profile = (props)=>{
                             </Pie>
                             <Tooltip />
                         </PieChart>
+                        
                     </Col>
                 </Row>
             </div>
