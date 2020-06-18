@@ -58,7 +58,7 @@ const Review = (props) => {
 
                         <h1 id="artisT" >{props.postedBy}</h1>
                         <h4 id="ratinG">Rating</h4>
-                        <h4 id="ratingNo">{props.rating}</h4>
+                        <h4 id="ratingNo">{props.rating/2}</h4>
 
                     </div>
                     
