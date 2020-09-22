@@ -7,11 +7,8 @@ import Axios from 'axios'
 import {connect} from 'react-redux'
 import Review from "./ReviewComp/UserReview"
 import Nav from 'react-bootstrap/Nav'
-// import Axios from 'axios'
 const Details = (props) => {
-    // const {pas} = props.location.state
-    
-    // var click = false;
+
     const center = {
         textAlign : "center"
     }
@@ -33,18 +30,15 @@ const Details = (props) => {
         async function fetchArtwork(){
             if(!isCancelled){
             const res = await Axios.get(`/api/artwork/${props.match.params.id}`);
-            // const json = await res.json();
-            // console.log(res.data)
+            
             getDetails(res.data);
             const title = encodeURI(res.data.title);
             const postedBy = encodeURI(res.data.postedBy);
             const ratingRes = await Axios.get(`/api/rating/getartworkrating/${title}/${postedBy}`);
             getReviews(ratingRes.data.ratings)
-            // console.log(ratingRes.data.ratings);
             const rank = await Axios.get(`/api/artwork/rank/${props.match.params.id}`);
             getRank(rank.data);
             }
-            // console.log(res.data);
         }
             fetchArtwork()
         return () => {
@@ -68,7 +62,6 @@ const Details = (props) => {
         handleCancelClick(null);
         alert('Review Submitted Successfully');
         props.history.push('/profile');
-        console.log(res);
     }
     const handleCancelClick=(e)=>{
         if(e)

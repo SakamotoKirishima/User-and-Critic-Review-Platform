@@ -31,18 +31,13 @@ const Review = (props) => {
     const getImage = async ()=>{
         await Axios.get(`/api/artwork/artworkimg/${props.title}/${props.postedBy}`)
         .then((res)=>{
-            console.log(res.data)
             return res.data;
         })
     }
     const handleClick=  async (e)=>{
         e.preventDefault();
-        // console.log(props.user.displayName)
         const res = await Axios.delete(`/api/rating/removerating/${encodeURI(props.title)}/${encodeURI(props.postedBy)}/${encodeURI(props.user.displayName)}`);
-        console.log(res.data);
         props.callBack(e);
-        // console.log(props.ratedBy)
-        // props.history.push('/profileAdmin');
     }
     return (
         <div id="reviewDiv">

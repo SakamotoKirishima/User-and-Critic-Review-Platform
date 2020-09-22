@@ -23,13 +23,6 @@ const Home = ()=>{
     const titleButton = {
         marginTop : "30px"
     }
-    // const learnMore = {
-    //     marginLeft : "50px",
-    //     color : "black",
-    //     fontSize : "20px",
-    //     fontWeight : "500",
-    //     paddingTop : "10px"
-    // }
     const textCenter = {
         paddingLeft : "8%"
     }

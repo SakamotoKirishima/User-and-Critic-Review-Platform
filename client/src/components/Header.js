@@ -4,11 +4,7 @@ import {Link} from 'react-router-dom'
 import "./Header.css"
 
 const Header = (props)=>{
-
-
-
     const renderContent =()=>{
-        // console.log(props.user)
         switch(props.user){
             case null:
                 return <li ><a className="amazingNav" href="/">Loading</a></li>
@@ -32,7 +28,6 @@ const Header = (props)=>{
                     }
             }
         }
-    
     return(
         <nav>
         <div className="nav-wrapper white">

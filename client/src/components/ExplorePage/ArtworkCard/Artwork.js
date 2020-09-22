@@ -11,7 +11,6 @@ const Artwork = (props) => {
     const handleClick = (e) =>{
         e.preventDefault();
         toggleShow(!show);
-        console.log('yepyep');
     }
     
     return (

@@ -16,7 +16,6 @@ const Explore = (props) => {
     })
     useEffect(()=>{
         if(props.user){
-            console.log(props.user.displayName);
             setUserData({
                 displayName:props.user.displayName,
                 
@@ -29,10 +28,7 @@ const Explore = (props) => {
     useEffect(function effectFunction(){
         async function fetchArtworks(){
             const res = await Axios.get(`api/artworks`);
-            // const json = await res.json();
-            console.log(res.data)
             searchArtworks(res.data.artworks);
-            // console.log(res.data);
         }
         fetchArtworks()
     },[])

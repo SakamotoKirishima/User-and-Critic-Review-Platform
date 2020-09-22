@@ -72,9 +72,7 @@ const Profile = (props)=>{
         {
             async function fetchArtworks(){
                 const res = await Axios.get(`/api/artworks`);
-                // const json = await res.json();
                 updateUserArtworks(res.data.artworks);
-                // console.log(res.data);
             }
             fetchArtworks()
         }
@@ -86,18 +84,12 @@ const Profile = (props)=>{
         {
             async function fetchReviews(){
                 const res = await Axios.get(`api/rating/all`);
-                // const json = await res.json();
                 updateUserReviews(res.data);
-                // console.log(res.data);
             }
             fetchReviews()
         }
     },[])
 
-    let renderLabel = function(entry) {
-        console.log(entry.name)
-        return entry.name;
-    }
 
     const [users,updateUsers] = useState([]);
     useEffect(function effectFunction(){
@@ -105,9 +97,7 @@ const Profile = (props)=>{
         {
             async function fetchUsers(){
                 const res = await Axios.get(`/api/user/all`);
-                // const json = await res.json();
                 updateUsers(res.data);
-                // console.log(res.data);
             }
             fetchUsers()
         }
@@ -131,7 +121,6 @@ const Profile = (props)=>{
     }
 
     function formatXAxis(tickItem) {
-        console.log(moment(tickItem).format('MMM Do YY'))
         return moment(tickItem).format('MMM Do YY')
     }
 

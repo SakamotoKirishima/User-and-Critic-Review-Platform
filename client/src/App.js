@@ -10,11 +10,10 @@ import {connect} from 'react-redux'
 import {fetchUserAction} from './actions/myaction';
 import Explore from './components/ExplorePage/Explore'
 import Review from './components/ArtworkDetails/Details'
-// import userRoute from '../../routes/userRoute';
+
 function App(props) {
     useEffect(()=>{
         props.fetch_user()
-        // console.log(props.state)
     },[])
   return (
 

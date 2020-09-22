@@ -24,7 +24,6 @@ const Userreview = (props) => {
         if(!isCancelled){
         async function getDetails(){
             const res = await Axios.get(`/api/rating/review/${props.id}`);
-            // console.log(res.data);
             getReviewDeatils(res.data);
             const res2 = await Axios.get(`/api/user/profileimg/${res.data.ratedBy}`)
             getUserImage(res2.data);

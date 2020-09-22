@@ -8,11 +8,8 @@ import {Link} from 'react-router-dom'
 const upload = (props) => {
     const handleClick=  async (e)=>{
         e.preventDefault();
-        // console.log(props.user.displayName)
         const res = await Axios.delete(`/api/deleteartwork/${encodeURI(props.artworkName)}/${encodeURI(props.user.displayName)}`);
-        console.log(res);
         props.callBack(e);
-        // props.history.push('/profileAdmin');
     }
     return (
             <div id="pastUploadCard" >

@@ -32,7 +32,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use('/userimages',express.static(path.join(__dirname, 'public')));
 
 require('./routes/authRoute')(app);
 require('./routes/artworkRoute')(app);
@@ -51,7 +50,3 @@ if(process.env.NODE_ENV === 'production'){
 app.listen(PORT,()=>{
     console.log("Listening on PORT : "+PORT);
 })
-
-//mongodb+srv://curs0r:<password>@cluster0-gtriz.mongodb.net/test?retryWrites=true&w=majority
-
-//immuneToAll

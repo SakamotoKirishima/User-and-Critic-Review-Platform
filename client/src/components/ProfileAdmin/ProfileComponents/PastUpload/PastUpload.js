@@ -7,11 +7,8 @@ import Axios from 'axios'
 const upload =(props) => {
     const handleClick=  async (e)=>{
         e.preventDefault();
-        // console.log(props.user.displayName)
         const res = await Axios.delete(`/api/deleteartwork/${encodeURI(props.artworkName)}/${encodeURI(props.postedBy)}`);
-        console.log(res.data);
         props.callBack(e);
-        // props.history.push('/profileAdmin');
     }
     return (
             <div id="pastUploadCard" >

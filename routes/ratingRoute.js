@@ -6,59 +6,82 @@ const Artwork = mongoose.model('artworks')
 module.exports=(app)=>{
 
     app.delete('/api/rating/removerating/:title/:postedby/:ratedby',(req,res)=>{
-        const title = decodeURI(req.params.title);
-        const ratedBy = decodeURI(req.params.ratedby);
-        const postedBy = decodeURI(req.params.postedby);
-        Rating.findOneAndDelete({title:title,ratedBy:ratedBy,postedBy:postedBy},function(err,rating){
-            console.log(err)
-            if(err)
-                return res.send(err)
-            else
-                return res.send('Rating Deleted Successfully')    
-        })
+        if(!req.user)
+            res.send('ERROR : REQUEST NOT AUTHENTICATED');
+        else{
+            const title = decodeURI(req.params.title);
+            const ratedBy = decodeURI(req.params.ratedby);
+            const postedBy = decodeURI(req.params.postedby);
+            Rating.findOneAndDelete({title:title,ratedBy:ratedBy,postedBy:postedBy},function(err,rating){
+                console.log(err)
+                if(err)
+                    return res.send(err)
+                else
+                    return res.send('Rating Deleted Successfully')    
+            })
+        }
     })
     app.get('/api/rating/review/:id',(req,res)=>{
-        Rating.findOne({_id:req.params.id},function(err,rating){
-            console.log(err)
-            if(err)
-                return res.send(err)
-            else
-                return res.send(rating)    
-        })
+        if(!req.user)
+            res.send('ERROR : REQUEST NOT AUTHENTICATED');
+        else{
+            Rating.findOne({_id:req.params.id},function(err,rating){
+                console.log(err)
+                if(err)
+                    return res.send(err)
+                else
+                    return res.send(rating)    
+            })
+        }
     })
     app.get('/api/rating/getartworkrating/:title/:postedby',(req,res)=>{
-        const title = decodeURI(req.params.title);
-        const postedBy = decodeURI(req.params.postedby);
-        Rating.find({title:title,postedBy:postedBy},function(err,ratings){
-            console.log(err)
-            if(err)
-                return res.send(err)
-            else
-                return res.send({ratings:ratings})    
-        })
+        if(!req.user)
+            res.send('ERROR : REQUEST NOT AUTHENTICATED');
+        else{
+            const title = decodeURI(req.params.title);
+            const postedBy = decodeURI(req.params.postedby);
+            Rating.find({title:title,postedBy:postedBy},function(err,ratings){
+                console.log(err)
+                if(err)
+                    return res.send(err)
+                else
+                    return res.send({ratings:ratings})    
+            })
+        }
     })
     app.get('/api/rating/all',(req,res)=>{
-        Rating.find({},function(err,ratings){
-            console.log(err)
-            if(err)
-                return res.send(err);
-            else
-                return res.send(ratings)
-        })
+        if(!req.user)
+            res.send('ERROR : REQUEST NOT AUTHENTICATED');
+        else{
+            Rating.find({},function(err,ratings){
+                console.log(err)
+                if(err)
+                    return res.send(err);
+                else
+                    return res.send(ratings)
+            })
+        }
     })
     app.get('/api/rating/getrating/:ratedby',(req,res)=>{
-        const ratedBy = decodeURI(req.params.ratedby);
-        Rating.find({ratedBy:ratedBy},function(err,ratings){
-            console.log(err)
-            if(err)
-                return res.send(err);
-            else
-                return res.send(ratings)
-        })
+        if(!req.user)
+            res.send('ERROR : REQUEST NOT AUTHENTICATED');
+        else{
+            const ratedBy = decodeURI(req.params.ratedby);
+            Rating.find({ratedBy:ratedBy},function(err,ratings){
+                console.log(err)
+                if(err)
+                    return res.send(err);
+                else
+                    return res.send(ratings)
+            })
+        }
     })
 
     app.post('/api/rating/rateartwork',(req,res)=>{
-        Rating.findOne({title:req.body.title,
+        if(!req.user)
+            res.send('ERROR : REQUEST NOT AUTHENTICATED');
+        else{
+            Rating.findOne({title:req.body.title,
             postedBy:req.body.postedBy,
             ratedBy:req.body.ratedBy}).then((existingRating)=>{
                 if(existingRating){
@@ -104,6 +127,7 @@ module.exports=(app)=>{
                     })
                 }
             })
+        }
     })
 }
 
